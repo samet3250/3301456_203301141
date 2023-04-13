@@ -89,7 +89,7 @@ class _newsPageState extends State<newsPage> {
             child: ListView(
               children: [
                 Padding(
-                    padding: EdgeInsets.only(left: 10,top:5),
+                    padding: EdgeInsets.only(left: 10,top:12),
                     child: Text(
                       'By ${widget.writer}  ${widget.time}',
                       style: TextStyle(fontFamily: 'Montserrat'),
