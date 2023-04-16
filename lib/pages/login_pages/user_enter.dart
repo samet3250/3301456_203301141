@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../home_pages/home.dart';
 
-class userEnter extends StatefulWidget {
-  const userEnter({super.key});
+class userEnter extends StatelessWidget {
+  userEnter({super.key});
 
-  @override
-  State<userEnter> createState() => _userEnterState();
-}
-
-class _userEnterState extends State<userEnter> {
   String email = "", password = "";
+
+  
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +35,9 @@ class _userEnterState extends State<userEnter> {
               //autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
-                  emailTexField(),
+                  emailTexField(context),
                   SizedBox(height: 10),
-                  ParolaTextField(),
+                  ParolaTextField(context),
                   SizedBox(
                     height: 15,
                   ),
@@ -84,7 +83,7 @@ class _userEnterState extends State<userEnter> {
         ));
   }
 
-  Container ParolaTextField() {
+  Container ParolaTextField(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(35, 0, 35, 0),
       height: 46,
@@ -122,7 +121,7 @@ class _userEnterState extends State<userEnter> {
     );
   }
 
-  Container emailTexField() {
+  Container emailTexField(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(35, 0, 35, 0),
       height: 46,

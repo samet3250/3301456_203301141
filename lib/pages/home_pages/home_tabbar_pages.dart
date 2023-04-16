@@ -13,7 +13,7 @@ class HomeTabbarPages extends StatefulWidget {
 class _HomeTabbarPagesState extends State<HomeTabbarPages>
     with SingleTickerProviderStateMixin {
   late TabController tabBarController;
-  int curIndex = 0;
+  
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _HomeTabbarPagesState extends State<HomeTabbarPages>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 0,
+        toolbarHeight:7,
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottom: PreferredSize(
@@ -52,7 +52,6 @@ class _HomeTabbarPagesState extends State<HomeTabbarPages>
                 fontSize: 18,
                 fontWeight: FontWeight.normal),
             unselectedLabelColor: Colors.black.withOpacity(0.6),
-            indicatorSize: TabBarIndicatorSize.label,
             labelPadding: EdgeInsets.only(left: 12, right: 3),
             indicatorColor: Colors.transparent,
           ),
