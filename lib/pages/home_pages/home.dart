@@ -19,11 +19,15 @@ class _HomeState extends State<Home> {
   void initState() {
     //TODO: implement initState
     super.initState();
+
     bottonNavBarPages = [HomeTabbarPages(), SearchPage(), Bookmark()];
+    
+
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.red.shade400,
@@ -232,7 +236,10 @@ class _HomeState extends State<Home> {
         showUnselectedLabels: false,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black.withOpacity(0.5),
-        onTap: (index) => setState(() => currentIndex = index),
+        onTap: (index) => setState((){
+          currentIndex = index;
+          
+        }),
         items: [
           BottomNavigationBarItem(
               icon: Padding(

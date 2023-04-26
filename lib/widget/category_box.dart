@@ -11,7 +11,7 @@ class categoryBox extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-              image: AssetImage(imageUrl), fit: BoxFit.cover)),
+              image:AssetImage(imageUrl), fit: BoxFit.cover)),
       child: Container(
         alignment: Alignment.center,
         child: Text(

@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:my_news_app/model/news_model.dart';
 import 'package:my_news_app/widget/category_box.dart';
+import 'package:my_news_app/widget/create_news.dart';
 import 'package:my_news_app/widget/searchnot_box.dart';
 import 'package:my_news_app/model/categories_model.dart';
 
@@ -16,10 +19,10 @@ import 'category_pages/science_page.dart';
 import 'category_pages/sports_page.dart';
 import 'category_pages/turkey_page.dart';
 import 'category_pages/world_page.dart';
-
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
-
+   SearchPage({super.key});
+  
+  
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
@@ -27,11 +30,19 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   late TextEditingController searchController;
 
+  
+  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     searchController = TextEditingController();
+    print("titlelist: ${titleList}");
+    print("titlelist111uzunluk: ${titleList.length}");
+
+    print("uzunluk: ${uzunluk}");
+    print("indexxlist: ${indexxList}");
+    print(control);
   }
 
   @override
@@ -66,7 +77,10 @@ class _SearchPageState extends State<SearchPage> {
                   Expanded(
                     child: TextFormField(
                       onFieldSubmitted: (value) {
-                        setState(() {});
+                        setState(() {
+                      
+                       
+                        });
                       },
                       controller: searchController,
                       decoration: InputDecoration(
@@ -113,7 +127,10 @@ class _SearchPageState extends State<SearchPage> {
     } else {
       return IconButton(
           onPressed: () {
-            setState(() {});
+            setState(() {
+             FocusScope.of(context).unfocus();
+
+            });
           },
           icon: Image.asset(
             'assets/icons/search.png',
@@ -214,21 +231,8 @@ Widget ifSearchEmptyText() {
 }
 
 SliverList ifSearchNotEmptySliver(String text) => SliverList(
-        delegate: SliverChildBuilderDelegate(
-      childCount: indexlist.length,
-      (context, index) {
-        
-        return SearchNotEmptyBox(
-            imageUrl: AllLists[indexlist[index][0]][indexlist[index][1]].imageUrl,
-            time: AllLists[indexlist[index][0]][indexlist[index][1]].time,
-            title: AllLists[indexlist[index][0]][indexlist[index][1]].title,
-            category:  AllLists[indexlist[index][0]][indexlist[index][1]].category,
-            subtitle:  AllLists[indexlist[index][0]][indexlist[index][1]].subtitle,
-            text:  AllLists[indexlist[index][0]][indexlist[index][1]].text,
-            writer:  AllLists[indexlist[index][0]][indexlist[index][1]].writer,
-            );
-      },
-    ));
+        delegate: SliverChildListDelegate(List.generate(indexlist.length, (index) => searchList[indexlist[index]]))
+        );
 
 SliverGrid ifSearchEmptySliver(BuildContext context) {
   return SliverGrid.count(
@@ -299,16 +303,19 @@ SliverGrid ifSearchEmptySliver(BuildContext context) {
 List indexlist = [];
 void searchlist_add(String text) {
   indexlist.clear();
-  for (int i = 0; i < AllLists.length; i++) {
-    for(int a=0;a<AllLists[i].length;a++){
-      var subtitle=AllLists[i][a].title.toLowerCase();
+  indexxList.clear();
+  
+  
+    for(int a=0;a<titleList.length;a++){
+      var subtitle= titleList[a].toLowerCase();
       var search_text =text.toLowerCase();
       if(subtitle.contains(search_text)){
-        indexlist.add([i,a]);
+        indexlist.add(a);
+        indexxList.add(a);
         
 
       }
     }
 
-  }
+  
 }

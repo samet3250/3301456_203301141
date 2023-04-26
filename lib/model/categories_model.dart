@@ -15,11 +15,6 @@ class Categories {
   Categories(name: "Sports", imageUrl: "assets/categories/sports.jpg"),
   Categories(name: "Science", imageUrl: "assets/categories/science.jpg"),
   Categories(name: "Education", imageUrl: "assets/categories/education.jpg"),
-  Categories(name: "Entertainment", imageUrl: "assets/categories/entertainment.jpg"),
-  Categories(name: "Lifestyle", imageUrl: "assets/categories/lifestyle.jpg"),
-  Categories(name: "Health and Fitness", imageUrl: "assets/categories/health.jpg"),
-  Categories(name: "Books", imageUrl: "assets/categories/books.jpg"),
-  Categories(name: "Cinema&Tv", imageUrl: "assets/categories/cinema.jpg"),
-  
+
 ];
 

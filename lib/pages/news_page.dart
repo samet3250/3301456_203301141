@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_news_app/content.dart';
+import 'package:my_news_app/model/news_model.dart';
+import 'package:my_news_app/news_api.dart';
 import 'package:my_news_app/pages/bookmark_page.dart';
 import 'package:my_news_app/widget/newsbox.dart';
+import 'package:share_plus/share_plus.dart';
+
 import 'package:word_selectable_text/word_selectable_text.dart';
 import 'package:translator/translator.dart';
+
+import '../word_selectable_scrapping.dart';
 
 class newsPage extends StatefulWidget {
   late String imageUrl;
@@ -11,7 +18,8 @@ class newsPage extends StatefulWidget {
   late String category;
   late String writer;
   late String time;
-  late String text;
+   String urlsc;
+  late Widget futureWidget;
   newsPage({
     super.key,
     required this.imageUrl,
@@ -20,7 +28,8 @@ class newsPage extends StatefulWidget {
     required this.time,
     required this.writer,
     required this.category,
-    required this.text,
+    this.urlsc="",
+    required this.futureWidget
   });
 
   @override
@@ -28,7 +37,8 @@ class newsPage extends StatefulWidget {
 }
 
 class _newsPageState extends State<newsPage> {
-  late GoogleTranslator translator = GoogleTranslator();
+  //late GoogleTranslator translator = GoogleTranslator();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +49,10 @@ class _newsPageState extends State<newsPage> {
             Stack(children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.5,
+                height: MediaQuery.of(context).size.height / 2.8,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(widget.imageUrl), fit: BoxFit.cover)),
+                        image: NetworkImage(widget.imageUrl), fit: BoxFit.fitWidth)),
               ),
               Positioned(
                 top: 23,
@@ -52,47 +62,24 @@ class _newsPageState extends State<newsPage> {
                     icon: Image.asset('assets/icons/back2.png',
                         width: 25, height: 25, color: Colors.black)),
               ),
-              Positioned(
-                  left: 10,
-                  bottom: 50,
-                  child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Colors.black.withOpacity(0.55)),
-                      padding: EdgeInsets.all(3),
-                      child: Text(
-                        widget.category,
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      ))),
+
             ]),
-            Expanded(child: Container())
+            
           ],
         ),
         Positioned(
           bottom: 0,
           right: 0,
           left: 0,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: (MediaQuery.of(context).size.height / 1.52),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30)),
+          top:MediaQuery.of(context).size.height / 3 ,
 
-                color: Colors.white,
-               ),
             child: ListView(
               children: [
                 Padding(
-                    padding: EdgeInsets.only(left: 10,top:12),
+                    padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      'By ${widget.writer}  ${widget.time}',
-                      style: TextStyle(fontFamily: 'Montserrat'),
+                      'From ${widget.writer}  ${widget.time}',
+                      style: TextStyle(fontFamily: 'Times'),
                     )),
                 Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
@@ -105,9 +92,100 @@ class _newsPageState extends State<newsPage> {
                           color: Colors.black),
                       maxLines: 2,
                     )),
+
+
+
+
+
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: WordSelectableText(
+                  
+                  child:  widget.futureWidget
+                ),
+              ],
+            ),
+          
+        ),
+        Positioned(
+            right: 16,
+            top: (MediaQuery.of(context).size.height - 60) / 3,
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    color: Colors.black, offset: Offset(0, 1), blurRadius: 10)
+              ], color: Colors.white, borderRadius: BorderRadius.circular(25)),
+              child: IconButton(
+                  onPressed: () async{
+                    await Share.share(widget.urlsc);
+                  },
+                  icon: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Image.asset('assets/icons/share.png',
+                        color: Colors.black),
+                  )),
+            )),
+        Positioned(
+            right: 74,
+            top: (MediaQuery.of(context).size.height - 60) / 3,
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    color: Colors.black, offset: Offset(0, 1), blurRadius: 10)
+              ], color: Colors.white, borderRadius: BorderRadius.circular(25)),
+              child: IconButton(
+                  onPressed: () {
+                    bookmark_list.add(newsBox(
+                        urlscrap:widget.urlsc,
+                        futureWidget:FutureBuilder(
+          future:getcontent(widget.urlsc),//"https://www.bbc.com/news/world-latin-america-65381624"
+          builder: (context, snapshot) {
+            
+            
+            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+            print("newspage yukleniyor");
+        if(snapshot.hasData){
+          var metin= snapshot.data!;
+          return FutureWordSelectableText(metin: metin);
+        }else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else
+             { return const CircularProgressIndicator();}
+      
+        },
+          ) ,
+                        imageUrl: widget.imageUrl,
+                        title: widget.title,
+                        subtitle: widget.subtitle,
+                        time: widget.time,
+                        writer: widget.writer,
+                        category: widget.category,
+                        //text: widget.text
+                        ));
+                  },
+                  icon: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Image.asset('assets/icons/bookmark.png',
+                        color: Colors.black),
+                  )),
+            )),
+      ]),
+    );
+  }
+}
+
+
+
+/* 
+
+
+
+
+
+WordSelectableText(
                     selectable: true,
                     highlight: true,
                     text: widget.text,
@@ -155,57 +233,10 @@ class _newsPageState extends State<newsPage> {
                       });
                     },
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-            right: 16,
-            top: (MediaQuery.of(context).size.height - 60) / 3,
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                    color: Colors.black, offset: Offset(0, 1), blurRadius: 10)
-              ], color: Colors.white, borderRadius: BorderRadius.circular(25)),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Image.asset('assets/icons/share.png',
-                        color: Colors.black),
-                  )),
-            )),
-        Positioned(
-            right: 74,
-            top: (MediaQuery.of(context).size.height - 60) / 3,
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                    color: Colors.black, offset: Offset(0, 1), blurRadius: 10)
-              ], color: Colors.white, borderRadius: BorderRadius.circular(25)),
-              child: IconButton(
-                  onPressed: () {
-                    bookmark_list.add(newsBox(
-                        imageUrl: widget.imageUrl,
-                        title: widget.title,
-                        subtitle: widget.subtitle,
-                        time: widget.time,
-                        writer: widget.writer,
-                        category: widget.category,
-                        text: widget.text));
-                  },
-                  icon: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Image.asset('assets/icons/bookmark.png',
-                        color: Colors.black),
-                  )),
-            )),
-      ]),
-    );
-  }
-}
+
+
+
+
+
+
+ */
