@@ -30,6 +30,6 @@ class _SciencePageState extends State<SciencePage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[5]);
+        body: createNewsListView[0][5]);
   }
 }

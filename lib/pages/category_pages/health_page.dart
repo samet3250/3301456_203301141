@@ -30,6 +30,6 @@ class _HealthPageState extends State<HealthPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[9]);
+        body: createNewsListView[0][9]);
   }
 }

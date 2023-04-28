@@ -31,6 +31,6 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[8]);
+        body: createNewsListView[0][8]);
   }
 }

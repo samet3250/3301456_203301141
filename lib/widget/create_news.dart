@@ -18,14 +18,14 @@ List<Widget> categories_name() {
       categories.length, (index) => Text(categories[index].name));
 }
 
-List<Widget> createNewsListView = [
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:0),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:1),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:2),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:3),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:4),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:5),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:6),
+List<List<Widget>> createNewsListView = [
+[NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:0)],
+[NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:1)],
+[NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:2)],
+[NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:3)],
+[NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:4)],
+[NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:5)],
+[NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:6)],
  //"https://newsapi.org/v2/top-headlines?language=en&sources=bbc-news&apiKey=90cb3f5228b24f1aabaded9050e8f0d6"
   
 ];
@@ -47,19 +47,13 @@ class _NewsBycategoryState extends State<NewsBycategory> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    apiListHolder=createApiList(widget.url,widget.category);
+   // apiListHolder=createApiList(widget.url,widget.category);
   }
   @override
   Widget build(BuildContext context) {
     print("kategori yukleniyor");
 
-    return FutureBuilder(
-    
-    future: apiListHolder ,
-    builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var newsList = snapshot.data!;
-              return ListView.builder(
+    return  ListView.builder(
               
                  
                 
@@ -125,12 +119,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
                 
               
               );
-    }else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else
-             { return const CircularProgressIndicator();}
-    
-    });
+  
   }
 }
 

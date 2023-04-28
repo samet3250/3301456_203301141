@@ -31,6 +31,6 @@ class _HighlightsPageState extends State<HighlightsPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[0]);
+        body: createNewsListView[0][0]);
   }
 }

@@ -31,6 +31,6 @@ class _CinemaPageState extends State<CinemaPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[11]);
+        body: createNewsListView[0][11]);
   }
 }
