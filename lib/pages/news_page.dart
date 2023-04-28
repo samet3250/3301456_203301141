@@ -49,7 +49,7 @@ class _newsPageState extends State<newsPage> {
             Stack(children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.8,
+                height: MediaQuery.of(context).size.height / 3,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(widget.imageUrl), fit: BoxFit.fitWidth)),
@@ -76,7 +76,7 @@ class _newsPageState extends State<newsPage> {
             child: ListView(
               children: [
                 Padding(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(left: 10,top: 8),
                     child: Text(
                       'From ${widget.writer}  ${widget.time}',
                       style: TextStyle(fontFamily: 'Times'),

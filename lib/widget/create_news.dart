@@ -20,12 +20,12 @@ List<Widget> categories_name() {
 
 List<Widget> createNewsListView = [
 NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:0),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:1),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:2),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:3),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:4),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:5),
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:6),
+NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:1),
+NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:2),
+NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:3),
+NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:4),
+NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:5),
+NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:6),
  //"https://newsapi.org/v2/top-headlines?language=en&sources=bbc-news&apiKey=90cb3f5228b24f1aabaded9050e8f0d6"
   
 ];
@@ -101,7 +101,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
           subtitle: news.subtitle,
           urlscrap: news.url,
           futureWidget: FutureBuilder(
-          future:getcontent(news.url),//"https://www.bbc.com/news/world-latin-america-65381624"
+          future:getcontent("https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html"),//"https://www.bbc.com/news/world-latin-america-65381624"
           builder: (context, snapshot) {
             
             

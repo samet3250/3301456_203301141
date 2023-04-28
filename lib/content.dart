@@ -10,15 +10,8 @@ Future<String> getcontent(String urll)async{
   var res=await http.get(Uri.parse(urll));
   final body=res.body;
   final document =parser.parse(body);
-  var response = document.getElementsByClassName("ArticleBody-articleBody")[0].getElementsByClassName("group")[0].getElementsByTagName("p");
-  response.forEach((element) {
-    
-    print(element.text.toString());
-    metin+=(element.text.toString()+"\n");
-    
-    
-    });
-    
+  var response = document.getElementsByClassName("ArticleBody-articleBody")[0].getElementsByClassName("group").forEach((element) {element.getElementsByTagName("p").forEach((element) {metin+=(element.text.toString()+"\n"); });});
+
     return metin;
 
 

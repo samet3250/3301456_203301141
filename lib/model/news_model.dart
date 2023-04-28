@@ -17,14 +17,14 @@ class news{
     // if(json['author']!=null &&json['title']!=null&&json['urlToImage']!=null&&json['publishedAt']!=null&&json['content']!=null){
       return news(
 
-      writer: json['author'] as String,
-      title: json['title'] as String,
-      imageUrl: json['urlToImage']!=null? json['urlToImage'] as String:"https://trthaberstatic.cdn.wp.trt.com.tr/resimler/1962000/togg-aa-1963758_1.jpg",
-      time: (json['publishedAt'] as String).replaceAll("T","|").replaceAll("Z", ""),
-      text: json['content'] as String,
+      writer:"aa",// json['author'] as String,
+      title:"aa",// json['title'] as String,
+      imageUrl: "aa",//json['urlToImage']!=null? json['urlToImage'] as String:"https://trthaberstatic.cdn.wp.trt.com.tr/resimler/1962000/togg-aa-1963758_1.jpg",
+      time: "aa",//(json['publishedAt'] as String).replaceAll("T","|").replaceAll("Z", ""),
+      text:"aa",// json['content'] as String,
       //json['content'] as String
-      subtitle: json['content'] as String,
-      url: json['url'] as String,
+      subtitle:"aa",// json['content'] as String,
+      url:"aa",// json['url'] as String,
       category: "techonology",
 /*       writer: json['author']==null? "aasa": json['author'] as String,
       title: json['title']==null?"assa":json['title']as String,
