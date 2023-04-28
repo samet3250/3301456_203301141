@@ -19,7 +19,7 @@ List<Widget> categories_name() {
 }
 
 List<Widget> createNewsListView = [
-NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'news',ind:0),
+NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=cnbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'cnbc',ind:0),
 NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:1),
 NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:2),
 NewsBycategory(url:"https://newsapi.org/v2/everything?language=en&domains=bbc.com&apiKey=90cb3f5228b24f1aabaded9050e8f0d6",category: 'business',ind:3),

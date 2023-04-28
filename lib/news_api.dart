@@ -9,6 +9,7 @@ import 'model/news_model.dart';
 Future <List<news>> createApiList(String url,String category)async{
 //var url =  Uri.parse("https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=90cb3f5228b24f1aabaded9050e8f0d6");
   //print("haber listeleri oluşturuldu");
+  //var client= http.Client();
   var response=await http.get(Uri.parse(url));
   List<news> allNews=[];
   if(response.statusCode==200){

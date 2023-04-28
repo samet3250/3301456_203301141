@@ -6,15 +6,17 @@ import 'package:html/parser.dart'as parser;
 
 Future<String> getcontent(String urll)async{
   String metin="";
+  //var client= http.Client();
   var res=await http.get(Uri.parse(urll));
   final body=res.body;
   final document =parser.parse(body);
-  var response = document.getElementsByClassName("ssrcss-1ki8hfp-StyledZone e1mcntqj3")[0].getElementsByClassName("ssrcss-11r1m41-RichTextComponentWrapper ep2nwvo0");
+  var response = document.getElementsByClassName("ArticleBody-articleBody")[0].getElementsByClassName("group")[0].getElementsByTagName("p");
   response.forEach((element) {
     
-    
+    print(element.text.toString());
     metin+=(element.text.toString()+"\n");
-
+    
+    
     });
     
     return metin;
