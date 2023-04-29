@@ -7,7 +7,7 @@ import 'package:html/parser.dart'as parser;
 import 'model/news_model.dart';
 
 //var response = document.getElementsByClassName("ArticleBody-articleBody")[0].getElementsByClassName("group").forEach((element) {element.getElementsByTagName("p").forEach((element) {metin+=(element.text.toString()+"\n"); });});
-Future<List> getcontent(String urll)async{
+Future<List<news>> getcontent(String urll)async{
   String metin="",aa="humm";
   //var client= http.Client();
   var res=await http.get(Uri.parse(urll));
@@ -27,8 +27,8 @@ Future<List> getcontent(String urll)async{
    }
    print("------------------------------------------------------------------------");
    int counter=0;
-    //List<news> all=[];
-/*     for(var i=0;i<founded_url.length;i++){
+    List<news> all=[];
+    for(var i=0;i<founded_url.length;i++){
   var res=await http.get(Uri.parse(founded_url[i]));
   final body=res.body;
   final document =parser.parse(body);
@@ -36,19 +36,10 @@ Future<List> getcontent(String urll)async{
   if(response!.className.toString()=="cnbcBrand"){
    all.add(news(category:response.className.toString(),imageUrl: response.className.toString(),subtitle: response.className.toString(),text: response.className.toString(),time: response.className.toString(),title: response.className.toString(),url:founded_url[i],writer: response.className.toString()  ));
   }
-    } */
+    }
     print(counter);
-    return founded_url;
+    return all;
 
 
-  
-}
-Future<news> getall(String url)async{
-var res=await http.get(Uri.parse(url));
-  final body=res.body;
-  final document =parser.parse(body);
-  var response= document.getElementById("BrandPageWrapper");
-  
-   return(news(category:response!.className.toString(),imageUrl: response.className.toString(),subtitle: response.className.toString(),text: response.className.toString(),time: response.className.toString(),title: response.className.toString(),url:url,writer: response.className.toString()  ));
   
 }

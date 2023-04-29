@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/content.dart';
-import 'package:my_news_app/main.dart';
 import 'package:my_news_app/model/categories_model.dart';
 import 'package:my_news_app/model/news_model.dart';
 import 'package:my_news_app/news_api.dart';
@@ -42,19 +41,19 @@ NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",
 }
 
 class _NewsBycategoryState extends State<NewsBycategory> {
-  //late Future <List> apiListHolder;
+  late Future <List<news>> apiListHolder;
   String? urlp="https://www.bbc.com/news/world-latin-america-65381624";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //apiListHolder= getcontent("https://www.cnbc.com/travel/");//createApiList(widget.url,widget.category);
+   // apiListHolder=createApiList(widget.url,widget.category);
   }
   @override
   Widget build(BuildContext context) {
     print("kategori yukleniyor");
 
-    return FutureBuilder(future:apiListHolder,
+    return FutureBuilder(future: getcontent("https://www.cnbc.com/travel/"),
     builder: (context, snapshot) {
             
             
@@ -62,39 +61,14 @@ class _NewsBycategoryState extends State<NewsBycategory> {
             print("newspage yukleniyor");
         if(snapshot.hasData){
           var metin= snapshot.data!;
-          return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) =>FutureBuilder(future: getall(metin[index]),builder:(context, snapshot) {
-            
-            
-            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            print("newspage yukleniyor");
-        if(snapshot.hasData){
-          var metin= snapshot.data!;
-          return  
-          
-           newsBox(category: metin.category,
-          futureWidget: metin.category,
+          return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) => newsBox(category: metin[index].category,
+          futureWidget: metin[index].category,
           imageUrl:"https://image.cnbcfm.com/api/v1/image/100220865-halkbank-turkey-gettyp.jpg?v=1681914579&w=740&h=416&ffmt=webp&vtcrop=y" ,
-          subtitle: metin.category,
-          time: metin.category,
-          title: metin.category,
-          urlscrap: metin.category,
-          writer: metin.category,); 
-
-        }else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else
-             { return const CircularProgressIndicator();}
-      
-  } ) 
-          
-          /* newsBox(category: metin[index],
-          futureWidget: metin[index],
-          imageUrl:"https://image.cnbcfm.com/api/v1/image/100220865-halkbank-turkey-gettyp.jpg?v=1681914579&w=740&h=416&ffmt=webp&vtcrop=y" ,
-          subtitle: metin[index],
-          time: metin[index],
-          title: metin[index],
-          urlscrap: metin[index],
-          writer: metin[index],) */ ); 
+          subtitle: metin[index].category,
+          time: metin[index].category,
+          title: metin[index].category,
+          urlscrap: metin[index].category,
+          ) ); 
 
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
