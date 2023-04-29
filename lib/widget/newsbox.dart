@@ -10,7 +10,7 @@ class newsBox extends StatelessWidget {
    String writer;
    String category;
    String urlscrap;
-   Widget futureWidget;
+   String futureWidget;
    
 
   //late int index;
@@ -24,7 +24,7 @@ class newsBox extends StatelessWidget {
      this.writer="",
      this.category="",
      this.urlscrap="",
-     required this.futureWidget
+     this.futureWidget=""
      
   });
 

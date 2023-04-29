@@ -31,6 +31,6 @@ class _EducationPageState extends State<EducationPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[0][6]);
+        body: createNewsListView[6]);
   }
 }

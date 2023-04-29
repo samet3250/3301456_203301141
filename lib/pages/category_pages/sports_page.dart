@@ -30,6 +30,6 @@ class _SportsPageState extends State<SportsPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[0][4]);
+        body: createNewsListView[4]);
   }
 }

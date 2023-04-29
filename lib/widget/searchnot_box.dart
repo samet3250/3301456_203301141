@@ -31,8 +31,8 @@ class SearchNotEmptyBox extends StatelessWidget {
                   imageUrl: imageUrl,
                   category: category,
                   urlsc: urlll,
-                  futureWidget: FutureBuilder(
-          future:getcontent(urlll),//"https://www.bbc.com/news/world-latin-america-65381624"
+                  futureWidget:"", /* FutureBuilder(
+          future:getcontent("https://www.cnbc.com/world-news/"),//"https://www.bbc.com/news/world-latin-america-65381624"
           builder: (context, snapshot) {
             
             
@@ -40,7 +40,7 @@ class SearchNotEmptyBox extends StatelessWidget {
             print("newspage yukleniyor");
         if(snapshot.hasData){
           var metin= snapshot.data!;
-          return FutureWordSelectableText(metin: metin);
+          return FutureWordSelectableText(metin: "");
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else
@@ -57,7 +57,7 @@ class SearchNotEmptyBox extends StatelessWidget {
              );}
       
         },
-          ),
+          ), */
                   //text: text,
                   time: time,
                   title: title,

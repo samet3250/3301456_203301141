@@ -30,6 +30,6 @@ class _TurkeyPageState extends State<TurkeyPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[0][1]);
+        body: createNewsListView[1]);
   }
 }

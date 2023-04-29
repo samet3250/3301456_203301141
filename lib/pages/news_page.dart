@@ -19,7 +19,7 @@ class newsPage extends StatefulWidget {
   late String writer;
   late String time;
    String urlsc;
-  late Widget futureWidget;
+  String futureWidget;
   newsPage({
     super.key,
     required this.imageUrl,
@@ -29,7 +29,7 @@ class newsPage extends StatefulWidget {
     required this.writer,
     required this.category,
     this.urlsc="",
-    required this.futureWidget
+    this.futureWidget=""
   });
 
   @override
@@ -100,7 +100,7 @@ class _newsPageState extends State<newsPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   
-                  child:  widget.futureWidget
+                  child: Text("merhaba")
                 ),
               ],
             ),
@@ -140,7 +140,7 @@ class _newsPageState extends State<newsPage> {
                   onPressed: () {
                     bookmark_list.add(newsBox(
                         urlscrap:widget.urlsc,
-                        futureWidget:FutureBuilder(
+                        futureWidget:"",/* FutureBuilder(
           future:getcontent(widget.urlsc),//"https://www.bbc.com/news/world-latin-america-65381624"
           builder: (context, snapshot) {
             
@@ -156,7 +156,7 @@ class _newsPageState extends State<newsPage> {
              { return const CircularProgressIndicator();}
       
         },
-          ) ,
+          ) , */
                         imageUrl: widget.imageUrl,
                         title: widget.title,
                         subtitle: widget.subtitle,

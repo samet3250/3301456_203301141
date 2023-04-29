@@ -31,6 +31,6 @@ class _BusinessPageState extends State<BusinessPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[0][3]);
+        body: createNewsListView[3]);
   }
 }

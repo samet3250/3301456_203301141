@@ -30,6 +30,6 @@ class _BooksPageState extends State<BooksPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[0][10]);
+        body: createNewsListView[10]);
   }
 }

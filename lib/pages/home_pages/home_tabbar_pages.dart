@@ -58,7 +58,7 @@ class _HomeTabbarPagesState extends State<HomeTabbarPages>
         ),
       ),
       body: TabBarView(
-          controller: tabBarController, children: createNewsListView[0]),
+          controller: tabBarController, children: createNewsListView),
     );
   }
 }
