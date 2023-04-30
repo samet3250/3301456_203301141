@@ -53,7 +53,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
   Widget build(BuildContext context) {
     print("kategori yukleniyor");
 
-    return FutureBuilder(future: getcontent("https://www.cnbc.com/travel/"),
+    return FutureBuilder(future: getcontent("https://www.cnbc.com/world-news/"),
     builder: (context, snapshot) {
             
             
@@ -62,13 +62,44 @@ class _NewsBycategoryState extends State<NewsBycategory> {
         if(snapshot.hasData){
           var metin= snapshot.data!;
           return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) => newsBox(category: metin[index].category,
-          futureWidget: metin[index].category,
-          imageUrl:"https://image.cnbcfm.com/api/v1/image/100220865-halkbank-turkey-gettyp.jpg?v=1681914579&w=740&h=416&ffmt=webp&vtcrop=y" ,
-          subtitle: metin[index].category,
-          time: metin[index].category,
-          title: metin[index].category,
-          urlscrap: metin[index].category,
-          ) ); 
+          futureWidget: FutureBuilder(
+          future:getcc("https://www.cnbc.com/2023/04/22/chiles-plan-for-state-control-in-lithium-dismays-business.html"),//"https://www.bbc.com/news/world-latin-america-65381624"
+          builder: (context, snapshot) {
+            
+            
+            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+            print("newspage yukleniyor");
+        if(snapshot.hasData){
+          var metin= snapshot.data!;
+          return FutureWordSelectableText(metin: metin);
+        }else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else
+             { return const CircularProgressIndicator();}
+      
+        },
+          ),
+          imageUrl:metin[index].imageUrl ,
+          subtitle: FutureBuilder(
+          future:getcc("https://www.cnbc.com/2023/04/22/chiles-plan-for-state-control-in-lithium-dismays-business.html"),//"https://www.bbc.com/news/world-latin-america-65381624"
+          builder: (context, snapshot) {
+            
+            
+            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+            print("newspage yukleniyor");
+        if(snapshot.hasData){
+          var metin= snapshot.data!;
+          return Text(metin,overflow: TextOverflow.visible,maxLines: 2,);
+        }else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else
+             { return const CircularProgressIndicator();}
+      
+        },
+          ),
+          time: metin[index].time,
+          title: metin[index].title,
+          urlscrap: metin[index].category,) ); 
 
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());

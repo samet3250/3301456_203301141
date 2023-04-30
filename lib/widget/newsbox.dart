@@ -5,12 +5,12 @@ import 'package:my_news_app/pages/news_page.dart';
 class newsBox extends StatelessWidget {
    String imageUrl;
    String title;
-   String subtitle;
+   late Widget subtitle;
    String time;
    String writer;
    String category;
    String urlscrap;
-   String futureWidget;
+   late Widget futureWidget;
    
 
   //late int index;
@@ -19,12 +19,12 @@ class newsBox extends StatelessWidget {
     //required this.index,
      this.imageUrl="",
      this.title="",
-     this.subtitle="",
+     required this.subtitle,
      this.time="",
      this.writer="",
      this.category="",
      this.urlscrap="",
-     this.futureWidget=""
+     required this.futureWidget
      
   });
 
@@ -42,7 +42,7 @@ class newsBox extends StatelessWidget {
                   time: time,
                   title: title,
                   writer: writer,
-                  subtitle: subtitle,
+                  subtitle: futureWidget,
                 )));
       },
       child: Padding(
@@ -81,7 +81,8 @@ class newsBox extends StatelessWidget {
             SizedBox(
               height: 3,
             ),
-            Text(
+            subtitle
+/*             Text(
               subtitle,
               style: TextStyle(
                 fontFamily: 'Montserrat',
@@ -90,7 +91,7 @@ class newsBox extends StatelessWidget {
               ),
               maxLines: 2,
               overflow: TextOverflow.visible,
-            ),
+            ), */
           ],
         ),
       ),

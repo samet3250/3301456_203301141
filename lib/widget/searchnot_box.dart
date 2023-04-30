@@ -6,7 +6,7 @@ import 'package:my_news_app/word_selectable_scrapping.dart';
 class SearchNotEmptyBox extends StatelessWidget {
   late String imageUrl;
   late String title;
-  late String subtitle;
+ late Widget subtitle;
   late String time;
   late String writer;
   late String category;
@@ -31,8 +31,8 @@ class SearchNotEmptyBox extends StatelessWidget {
                   imageUrl: imageUrl,
                   category: category,
                   urlsc: urlll,
-                  futureWidget:"", /* FutureBuilder(
-          future:getcontent("https://www.cnbc.com/world-news/"),//"https://www.bbc.com/news/world-latin-america-65381624"
+                  futureWidget: FutureBuilder(
+          future:getcc("https://www.cnbc.com/world-news/"),//"https://www.bbc.com/news/world-latin-america-65381624"
           builder: (context, snapshot) {
             
             
@@ -40,7 +40,7 @@ class SearchNotEmptyBox extends StatelessWidget {
             print("newspage yukleniyor");
         if(snapshot.hasData){
           var metin= snapshot.data!;
-          return FutureWordSelectableText(metin: "");
+          return FutureWordSelectableText(metin: metin);
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else
@@ -57,7 +57,7 @@ class SearchNotEmptyBox extends StatelessWidget {
              );}
       
         },
-          ), */
+          ), 
                   //text: text,
                   time: time,
                   title: title,
