@@ -6,7 +6,7 @@ import 'package:my_news_app/word_selectable_scrapping.dart';
 class SearchNotEmptyBox extends StatelessWidget {
   late String imageUrl;
   late String title;
- late Widget subtitle;
+  late String subtitle;
   late String time;
   late String writer;
   late String category;
@@ -62,7 +62,7 @@ class SearchNotEmptyBox extends StatelessWidget {
                   time: time,
                   title: title,
                   writer: writer,
-                  subtitle: subtitle,
+                  subtitle: "",
                 )));
       },
       child: Container(

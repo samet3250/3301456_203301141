@@ -80,23 +80,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
         },
           ),
           imageUrl:metin[index].imageUrl ,
-          subtitle: FutureBuilder(
-          future:getcc("https://www.cnbc.com/2023/04/22/chiles-plan-for-state-control-in-lithium-dismays-business.html"),//"https://www.bbc.com/news/world-latin-america-65381624"
-          builder: (context, snapshot) {
-            
-            
-            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            print("newspage yukleniyor");
-        if(snapshot.hasData){
-          var metin= snapshot.data!;
-          return Text(metin,overflow: TextOverflow.visible,maxLines: 2,);
-        }else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else
-             { return const CircularProgressIndicator();}
-      
-        },
-          ),
+          subtitle: " ",
           time: metin[index].time,
           title: metin[index].title,
           urlscrap: metin[index].category,) ); 

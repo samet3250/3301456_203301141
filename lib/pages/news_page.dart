@@ -14,7 +14,7 @@ import '../word_selectable_scrapping.dart';
 class newsPage extends StatefulWidget {
   late String imageUrl;
   late String title;
-  late Widget subtitle;
+  late String subtitle;
   late String category;
   late String writer;
   late String time;
@@ -140,8 +140,8 @@ class _newsPageState extends State<newsPage> {
                   onPressed: () {
                     bookmark_list.add(newsBox(
                         urlscrap:widget.urlsc,
-                        futureWidget: FutureBuilder(
-          future:getcc(widget.urlsc),//"https://www.bbc.com/news/world-latin-america-65381624"
+                        futureWidget:Text("sss"),/* FutureBuilder(
+          future:getcontent(widget.urlsc),//"https://www.bbc.com/news/world-latin-america-65381624"
           builder: (context, snapshot) {
             
             
@@ -156,7 +156,7 @@ class _newsPageState extends State<newsPage> {
              { return const CircularProgressIndicator();}
       
         },
-          ) , 
+          ) , */
                         imageUrl: widget.imageUrl,
                         title: widget.title,
                         subtitle: widget.subtitle,

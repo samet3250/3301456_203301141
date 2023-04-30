@@ -9,11 +9,13 @@ import 'model/news_model.dart';
 //var response = document.getElementsByClassName("ArticleBody-articleBody")[0].getElementsByClassName("group").forEach((element) {element.getElementsByTagName("p").forEach((element) {metin+=(element.text.toString()+"\n"); });});
 Future<List<news>> getcontent(String urll)async{
   String metin="",aa="humm";
+  List<news> aaaa=[];
   //var client= http.Client();
-  var res=await http.get(Uri.parse(urll));
+  for (int i=0;i<7;i++){
+    var res=await http.get(Uri.parse(urll));
   final body=res.body;
   final document =parser.parse(body);
-  List<news> aaaa=[];
+  
   /* 
   tarih---  el.children[1].getElementsByClassName("Card-cardFooter")[0].text
   acıklama--- el.children[1].getElementsByClassName("Card-titleContainer")[0].text
@@ -28,6 +30,7 @@ Future<List<news>> getcontent(String urll)async{
       time:el.children[1].getElementsByClassName("Card-cardFooter")[0].text 
     ));
   });});
+  }
 /*   var response=document.getElementsByClassName("PageBuilder-pageWrapper")[0];
     
   //var response2=document.getElementsByClassName("PageBuilder-pageWrapper")[0].getElementsByClassName("PageBuilder-containerFluidWidths PageBuilder-pageRow")[3].getElementsByClassName("PageBuilder-col-9 PageBuilder-col")[0];
