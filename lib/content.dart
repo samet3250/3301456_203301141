@@ -40,7 +40,7 @@ Future<List<news>> getcontent(String urll)async{
   response2.children[1].getElementsByClassName("Card-titleContainer")[0].text    ----text
   response2.children[1].getElementsByClassName("Card-cardFooter")[0].text  ----- time
    */
-  var response2 = document.getElementsByClassName("PageBuilder-pageWrapper")[0].getElementsByClassName("PageBuilder-containerFluidWidths PageBuilder-pageRow")[0].getElementsByClassName("Layout-layout");
+/*   var response2 = document.getElementsByClassName("PageBuilder-pageWrapper")[0].getElementsByClassName("PageBuilder-containerFluidWidths PageBuilder-pageRow")[0].getElementsByClassName("Layout-layout");
       aaaa.add(news(
       url: response2[0].children[0].getElementsByTagName("a")[0].attributes["href"].toString(),
       imageUrl:response2[0].children[0].getElementsByTagName("source")[0].attributes["srcset"].toString(), //el.getElementsByClassName("Card-squareMediaContainer Card-placeholder")[0].children[0].innerHtml.split("\"")[1]!="PlayButton-base"?el.getElementsByClassName("Card-squareMediaContainer Card-placeholder")[0].children[0].innerHtml.split("\"")[1]:"https://im.haberturk.com/2023/04/26/3586345_18459bcabc71697438868098c51bdef4_1366x1366.jpg",
@@ -98,7 +98,7 @@ Future<List<news>> getcontent(String urll)async{
       title: response2[2].getElementsByClassName("Card-standardBreakerCard Card-threeUpStackRectangleSquareMedia Card-rectangleToLeftSquareMedia Card-card")[1].getElementsByClassName("Card-titleContainer")[0].text,
       time:response2[2].getElementsByClassName("Card-standardBreakerCard Card-threeUpStackRectangleSquareMedia Card-rectangleToLeftSquareMedia Card-card")[1].getElementsByClassName("Card-time")[0].text
 
-    ));
+    )); */
   }
   
 /*   var response=document.getElementsByClassName("PageBuilder-pageWrapper")[0];

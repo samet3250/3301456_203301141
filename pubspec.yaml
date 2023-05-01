@@ -31,7 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   translator: ^0.1.7
-  word_selectable_text: ^0.2.0 
+  word_selectable_text: ^0.2.0
+  
 
 
 
