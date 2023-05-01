@@ -6,7 +6,7 @@ import 'package:my_news_app/pages/home_pages/home.dart';
 import 'package:my_news_app/pages/login_pages/user_enter.dart';
 import 'package:my_news_app/pages/login_pages/user_enterwith.dart';
 import 'package:my_news_app/pages/search_page.dart';
-late Future  apiListHolder;
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
@@ -18,11 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    apiListHolder= getcontent("https://www.cnbc.com/world-news/");
-  }
+
   @override
   Widget build(BuildContext context) {
      

@@ -19,30 +19,30 @@ List<Widget> categories_name() {
 }
 
 List<Widget> createNewsListView = [
-NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:0),
-NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:1),
-NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:2),
-NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:3),
-NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:4),
-NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:5),
-NewsBycategory(url:"https://www.cnbc.com/2023/04/28/euro-zone-gdp-q1-2023.html",category: 'cnbc',ind:6),
+NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:0),
+NewsBycategory(url:"https://www.cnbc.com/turkey/",ind:1),
+NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:2),
+NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:3),
+NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:4),
+NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:5),
+NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:6),
  //"https://newsapi.org/v2/top-headlines?language=en&sources=bbc-news&apiKey=90cb3f5228b24f1aabaded9050e8f0d6"
   
 ];
 
  class NewsBycategory extends StatefulWidget {
   late String url;
-  late String category;
+  
   late int ind;
-   NewsBycategory({super.key,required this.url,required this.category,required this.ind});
+   NewsBycategory({super.key,required this.url,required this.ind});
 
   @override
   State<NewsBycategory> createState() => _NewsBycategoryState();
 }
 
 class _NewsBycategoryState extends State<NewsBycategory> {
-  late Future <List<news>> apiListHolder;
-  String? urlp="https://www.bbc.com/news/world-latin-america-65381624";
+  //late Future <List<news>> apiListHolder;
+  
   @override
   void initState() {
     // TODO: implement initState
@@ -53,7 +53,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
   Widget build(BuildContext context) {
     print("kategori yukleniyor");
 
-    return FutureBuilder(future: getcontent("https://www.cnbc.com/world-news/"),
+    return FutureBuilder(future: getcontent(widget.url),
     builder: (context, snapshot) {
             
             
@@ -63,7 +63,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
           var metin= snapshot.data!;
           return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) => newsBox(category: metin[index].category,
           futureWidget: FutureBuilder(
-          future:getcc("https://www.cnbc.com/2023/04/22/chiles-plan-for-state-control-in-lithium-dismays-business.html"),//"https://www.bbc.com/news/world-latin-america-65381624"
+          future:getcc(metin[index].url),//"https://www.bbc.com/news/world-latin-america-65381624"
           builder: (context, snapshot) {
             
             
@@ -83,7 +83,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
           subtitle: " ",
           time: metin[index].time,
           title: metin[index].title,
-          urlscrap: metin[index].category,) ); 
+          urlscrap: metin[index].url,) ); 
 
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
