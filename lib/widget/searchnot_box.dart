@@ -40,7 +40,7 @@ class SearchNotEmptyBox extends StatelessWidget {
             print("newspage yukleniyor");
         if(snapshot.hasData){
           var metin= snapshot.data!;
-          return FutureWordSelectableText(metin: metin);
+          return FutureWordSelectableText(metin: metin[0]);
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else
@@ -62,7 +62,33 @@ class SearchNotEmptyBox extends StatelessWidget {
                   time: time,
                   title: title,
                   writer: writer,
-                  subtitle: "",
+                  subtitle: FutureBuilder(
+          future:getcc("https://www.cnbc.com/world-news/"),//"https://www.bbc.com/news/world-latin-america-65381624"
+          builder: (context, snapshot) {
+            
+            
+            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+            print("newspage yukleniyor");
+        if(snapshot.hasData){
+          var metin= snapshot.data!;
+          return Text(metin[1]);
+        }else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else
+             { return Padding(
+               padding: const EdgeInsets.only(top: 20),
+               child: Center(
+       
+                  child:  CircularProgressIndicator(
+                    color: Colors.red,
+                    strokeWidth: 4,
+                  ),
+                           
+               ),
+             );}
+      
+        },
+          ),
                 )));
       },
       child: Container(

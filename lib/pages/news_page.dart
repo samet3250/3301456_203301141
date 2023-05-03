@@ -14,7 +14,7 @@ import '../word_selectable_scrapping.dart';
 class newsPage extends StatefulWidget {
   late String imageUrl;
   late String title;
-  late String subtitle;
+  late Widget subtitle;
   late String category;
   late String writer;
   late String time;

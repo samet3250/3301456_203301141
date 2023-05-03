@@ -43,6 +43,7 @@ dependencies:
   http: ^0.13.5
   html: ^0.15.2
   share_plus: ^6.3.3
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:

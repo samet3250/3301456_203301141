@@ -21,10 +21,10 @@ List<Widget> categories_name() {
 List<Widget> createNewsListView = [
 NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:0),
 NewsBycategory(url:"https://www.cnbc.com/turkey/",ind:1),
-NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:2),
-NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:3),
-NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:4),
-NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:5),
+NewsBycategory(url:"https://www.cnbc.com/business/",ind:2),
+NewsBycategory(url:"https://www.cnbc.com/technology/",ind:3),
+NewsBycategory(url:"https://www.cnbc.com/travel/",ind:4),
+NewsBycategory(url:"https://www.cnbc.com/politics/",ind:5),
 NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:6),
  //"https://newsapi.org/v2/top-headlines?language=en&sources=bbc-news&apiKey=90cb3f5228b24f1aabaded9050e8f0d6"
   
@@ -53,7 +53,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
   Widget build(BuildContext context) {
     print("kategori yukleniyor");
 
-    return FutureBuilder(future: getcontent(widget.url),
+    return FutureBuilder(future: getcontent(widget.url,widget.ind),
     builder: (context, snapshot) {
             
             
@@ -71,7 +71,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
             print("newspage yukleniyor");
         if(snapshot.hasData){
           var metin= snapshot.data!;
-          return FutureWordSelectableText(metin: metin);
+          return FutureWordSelectableText(metin: metin[0]);
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else
@@ -80,7 +80,23 @@ class _NewsBycategoryState extends State<NewsBycategory> {
         },
           ),
           imageUrl:metin[index].imageUrl ,
-          subtitle: " ",
+          subtitle: FutureBuilder(
+          future:getcc(metin[index].url),//"https://www.bbc.com/news/world-latin-america-65381624"
+          builder: (context, snapshot) {
+            
+            
+            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+            print("newspage yukleniyor");
+        if(snapshot.hasData){
+          var metin= snapshot.data!;
+          return Text(metin[1]);
+        }else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            } else
+             { return const CircularProgressIndicator();}
+      
+        },
+          ),
           time: metin[index].time,
           title: metin[index].title,
           urlscrap: metin[index].url,) ); 
