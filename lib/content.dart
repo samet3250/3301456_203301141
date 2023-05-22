@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart'as parser;
 
 import 'model/news_model.dart';
-
 //var response = document.getElementsByClassName("ArticleBody-articleBody")[0].getElementsByClassName("group").forEach((element) {element.getElementsByTagName("p").forEach((element) {metin+=(element.text.toString()+"\n"); });});
 Future<List<news>> getcontent(String urll,int index)async{
   String metin="",aa="humm";
@@ -15,6 +15,7 @@ Future<List<news>> getcontent(String urll,int index)async{
     var res=await http.get(Uri.parse(urll));
   final body=res.body;
   final document =parser.parse(body);
+
   
   /* 
   tarih---  el.children[1].getElementsByClassName("Card-cardFooter")[0].text
@@ -26,7 +27,7 @@ Future<List<news>> getcontent(String urll,int index)async{
   var response2 = document.getElementsByClassName("PageBuilder-pageWrapper")[0].getElementsByClassName("PageBuilder-containerFluidWidths PageBuilder-pageRow")[0].getElementsByClassName("Layout-layout");
 
   void addnewsust(int a,int b){
-      print(response2[a].children[b].getElementsByClassName("Card-titleAndFooter")[0].getElementsByTagName("a")[0].attributes["href"]);
+      //print(response2[a].children[b].getElementsByClassName("Card-titleAndFooter")[0].getElementsByTagName("a")[0].attributes["href"]);
       
       if(!response2[a].children[b].getElementsByTagName("a")[0].attributes["href"].toString().contains("video")&&!response2[a].children[b].getElementsByTagName("a")[0].attributes["href"].toString().contains("live-updates")&&response2[a].children[b].getElementsByClassName("Card-titleAndFooter")[0].getElementsByTagName("a")[0].attributes["href"]!="/pro/"){
       aaaa.add(news(
@@ -74,7 +75,8 @@ void morenews(int number){
       imageUrl:el.getElementsByTagName("source")[0].attributes["srcset"].toString(), //el.getElementsByClassName("Card-squareMediaContainer Card-placeholder")[0].children[0].innerHtml.split("\"")[1]!="PlayButton-base"?el.getElementsByClassName("Card-squareMediaContainer Card-placeholder")[0].children[0].innerHtml.split("\"")[1]:"https://im.haberturk.com/2023/04/26/3586345_18459bcabc71697438868098c51bdef4_1366x1366.jpg",
       category: el.children[1].getElementsByClassName("Card-eyebrowContainer")[0].text,
       title: el.children[1].getElementsByClassName("Card-titleAndFooter")[0].getElementsByClassName("Card-title")[0].text,//el.children[1].getElementsByClassName("Card-titleContainer")[0].text,
-      time:el.children[1].getElementsByClassName("Card-cardFooter")[0].text 
+      time:el.children[1].getElementsByClassName("Card-cardFooter")[0].text ,
+      
     )); 
 }   
   });});  
@@ -135,10 +137,10 @@ Future<List<String>> getcc(String urll)async{
   var res=await http.get(Uri.parse(urll));
   final body=res.body;
   final document =parser.parse(body);
-    print(document.getElementsByTagName("meta")[8].attributes["content"]); 
+    //print(document.getElementsByTagName("meta")[8].attributes["content"]); 
 
-  var response = document.getElementsByClassName("ArticleBody-articleBody")[0].getElementsByClassName("group").forEach((element) {element.getElementsByTagName("p").forEach((element) {metin+=(element.text.toString()+"\n"); });});
+  var response = document.getElementsByClassName("group").forEach((element) {element.getElementsByTagName("p").forEach((element) {metin+=(element.text.toString()+"\n"); });});
   aa=document.getElementsByTagName("meta")[8].attributes["content"]!;
   List<String> mycontent=[metin,aa];
   return mycontent;
-}
+}//"ArticleBody-articleBody".getelementsbyclassname[0]

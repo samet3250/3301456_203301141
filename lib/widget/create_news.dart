@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:my_news_app/content.dart';
 import 'package:my_news_app/model/categories_model.dart';
 import 'package:my_news_app/model/news_model.dart';
 import 'package:my_news_app/news_api.dart';
+import 'package:my_news_app/pages/home_pages/home.dart';
 import 'package:my_news_app/pages/news_page.dart';
 import 'package:my_news_app/widget/searchnot_box.dart';
 import 'package:my_news_app/word_selectable_scrapping.dart';
@@ -11,29 +13,46 @@ import 'newsbox.dart';
 List<String> titleList=[];
 List<int>indexxList=[];
 List<SearchNotEmptyBox>searchList=[];
-bool control=true;
+bool control1=true;
+bool control2=true;
+bool control3=true;
+bool control4=true;
+bool control5=true;
+bool control6=true;
+bool control7=true;
+String local="france";
 int uzunluk=0;
 List<Widget> categories_name() {
+  
+  print(box2.isNotEmpty? box2.values.first:"neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
   return List.generate(
       categories.length, (index) => Text(categories[index].name));
 }
 
 List<Widget> createNewsListView = [
-NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:0),
+ NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:0),
 NewsBycategory(url:"https://www.cnbc.com/turkey/",ind:1),
 NewsBycategory(url:"https://www.cnbc.com/business/",ind:2),
 NewsBycategory(url:"https://www.cnbc.com/technology/",ind:3),
 NewsBycategory(url:"https://www.cnbc.com/travel/",ind:4),
 NewsBycategory(url:"https://www.cnbc.com/politics/",ind:5),
-NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:6),
+NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:6), 
  //"https://newsapi.org/v2/top-headlines?language=en&sources=bbc-news&apiKey=90cb3f5228b24f1aabaded9050e8f0d6"
   
 ];
 
- class NewsBycategory extends StatefulWidget {
+
+ /* Future? Newsscrap(String url,int ind){ getcontent(url, ind).then((value) {
+  print("-----------");
+  print(value.toString());
+  print("-----------");
+
+ });} */
+  class NewsBycategory extends StatefulWidget {
   late String url;
   
   late int ind;
+  
    NewsBycategory({super.key,required this.url,required this.ind});
 
   @override
@@ -51,26 +70,157 @@ class _NewsBycategoryState extends State<NewsBycategory> {
   }
   @override
   Widget build(BuildContext context) {
+     if (widget.ind==1&&box2.isNotEmpty){
+      widget.url="https://www.cnbc.com/${box2.get("cat")}/";
+    } 
     print("kategori yukleniyor");
-
+          // var box=Hive.box("News_all");
+    // box.clear();
     return FutureBuilder(future: getcontent(widget.url,widget.ind),
     builder: (context, snapshot) {
             
             
             //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            print("newspage yukleniyor");
         if(snapshot.hasData){
           var metin= snapshot.data!;
-          return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) => newsBox(category: metin[index].category,
+          return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) {
+            // box.add(metin[index].url);
+           print("newspage yukleniyor");
+            if(control1==true &&widget.ind==0){
+        for (var i = 0; i < metin.length; i++) {
+         titleList.add(metin[i].title);
+         var ne=metin[i]; 
+        searchList.add(SearchNotEmptyBox(
+            imageUrl: ne.imageUrl,
+            time: ne.time,
+            title: ne.title,
+            category:  ne.category,
+            subtitle:  ne.subtitle,
+            urlll: ne.url,
+            writer:  ne.writer
+            
+            ));
+            
+         }
+        control1=false;   
+    } 
+                if(control2==true &&widget.ind==1){
+        for (var i = 0; i < metin.length; i++) {
+         titleList.add(metin[i].title);
+         var ne=metin[i]; 
+        searchList.add(SearchNotEmptyBox(
+            imageUrl: ne.imageUrl,
+            time: ne.time,
+            title: ne.title,
+            category:  ne.category,
+            subtitle:  ne.subtitle,
+            urlll: ne.url,
+            writer:  ne.writer
+            ));
+            
+         }
+        control2=false;   
+    }            if(control3==true &&widget.ind==2){
+        for (var i = 0; i < metin.length; i++) {
+         titleList.add(metin[i].title);
+         var ne=metin[i]; 
+        searchList.add(SearchNotEmptyBox(
+            imageUrl: ne.imageUrl,
+            time: ne.time,
+            title: ne.title,
+            category:  ne.category,
+            subtitle:  ne.subtitle,
+            urlll: ne.url,
+            writer:  ne.writer
+            ));
+            
+         }
+        control3=false;   
+    }  
+                if(control4==true &&widget.ind==3){
+        for (var i = 0; i < metin.length; i++) {
+         titleList.add(metin[i].title);
+         var ne=metin[i]; 
+        searchList.add(SearchNotEmptyBox(
+            imageUrl: ne.imageUrl,
+            time: ne.time,
+            title: ne.title,
+            category:  ne.category,
+            subtitle:  ne.subtitle,
+            urlll: ne.url,
+            writer:  ne.writer
+            ));
+            
+         }
+        control4=false;   
+    } 
+                if(control5==true &&widget.ind==4){
+        for (var i = 0; i < metin.length; i++) {
+         titleList.add(metin[i].title);
+         var ne=metin[i]; 
+        searchList.add(SearchNotEmptyBox(
+            imageUrl: ne.imageUrl,
+            time: ne.time,
+            title: ne.title,
+            category:  ne.category,
+            subtitle:  ne.subtitle,
+            urlll: ne.url,
+            writer:  ne.writer
+            ));
+            
+         }
+        control5=false;   
+    } 
+                if(control6==true &&widget.ind==5){
+        for (var i = 0; i < metin.length; i++) {
+         titleList.add(metin[i].title);
+         var ne=metin[i]; 
+        searchList.add(SearchNotEmptyBox(
+            imageUrl: ne.imageUrl,
+            time: ne.time,
+            title: ne.title,
+            category:  ne.category,
+            subtitle:  ne.subtitle,
+            urlll: ne.url,
+            writer:  ne.writer
+            ));
+            
+         }
+        control6=false;   
+    } 
+                if(control7==true &&widget.ind==6){
+        for (var i = 0; i < metin.length; i++) {
+         titleList.add(metin[i].title);
+         var ne=metin[i]; 
+        searchList.add(SearchNotEmptyBox(
+            imageUrl: ne.imageUrl,
+            time: ne.time,
+            title: ne.title,
+            category:  ne.category,
+            subtitle:  ne.subtitle,
+            urlll: ne.url,
+            writer:  ne.writer
+            ));
+            
+         }
+        control7=false;   
+    }       
+            return newsBox(
+          category: metin[index].category,
+          
           futureWidget: FutureBuilder(
           future:getcc(metin[index].url),//"https://www.bbc.com/news/world-latin-america-65381624"
           builder: (context, snapshot) {
             
             
             //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            print("newspage yukleniyor");
+            
         if(snapshot.hasData){
           var metin= snapshot.data!;
+          
+ 
+
+          
           return FutureWordSelectableText(metin: metin[0]);
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
@@ -86,7 +236,7 @@ class _NewsBycategoryState extends State<NewsBycategory> {
             
             
             //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            print("newspage yukleniyor");
+            
         if(snapshot.hasData){
           var metin= snapshot.data!;
           return Text(metin[1]);
@@ -94,19 +244,27 @@ class _NewsBycategoryState extends State<NewsBycategory> {
               return Text(snapshot.error.toString());
             } else
              { return const CircularProgressIndicator();}
-      
+          
         },
           ),
           time: metin[index].time,
           title: metin[index].title,
-          urlscrap: metin[index].url,) ); 
-
+          urlscrap: metin[index].url,);
+          
+          } 
+          ); 
+        
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else
              { return const CircularProgressIndicator();}
-      
-        }); /* ListView.builder(
+        
+        }
+        
+        
+        );  
+        
+        /* ListView.builder(
               
                  
                 
@@ -171,9 +329,10 @@ class _NewsBycategoryState extends State<NewsBycategory> {
       }
                 
               
-              ); */
-  
+              ); 
+  */
   }
+  
 }
 
 

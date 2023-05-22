@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:my_news_app/content.dart';
 import 'package:my_news_app/pages/bookmark_page.dart';
 import 'package:my_news_app/pages/home_pages/home_tabbar_pages.dart';
 import 'package:my_news_app/pages/login_pages/user_enterwith.dart';
 import 'package:my_news_app/pages/search_page.dart';
+import 'package:my_news_app/widget/create_news.dart';
+String? local2;
+var box2=Hive.box("category");
+var box3=Hive.box("language");
+List<String> list = <String>['turkey', 'france', 'united-kingdom', 'india'];
+List<String> list2 = <String>['tr', 'de', 'es', 'fr'];
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,10 +29,11 @@ class _HomeState extends State<Home> {
     super.initState();
 
     bottonNavBarPages = [HomeTabbarPages(), SearchPage(), Bookmark()];
-    
+
 
   }
-
+  String dropdownValue1 = list.first;
+  String dropdownValue2 = list.first;
   @override
   Widget build(BuildContext context) {
 
@@ -155,21 +164,84 @@ class _HomeState extends State<Home> {
           ),
           GestureDetector(
             onTap: () {},
-            child: Text(
-              'Settings',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
+            child: GestureDetector(
+               onDoubleTap: () {
+                 
+                 //await box2.put("cat", "france");
+               },
+              child: ExpansionTile(
+                title: Text(
+                  'Settings',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: DropdownButton<String>(
+                        //value: dropdownValue,
+                        hint: Text("choose"),
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? value)async{
+                          // This is called when the user selects an item.
+                           
+                            dropdownValue1 = value!;
+                            await box2.put("cat", value);
+                          
+                        },
+                        items: list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                  ),
+                                        Align(
+                    alignment: Alignment.topLeft,
+                    child: DropdownButton<String>(
+                        //value: dropdownValue,
+                        hint: Text("translate to:"),
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? value)
+                          // This is called when the user selects an item.
+                          async {
+                            dropdownValue2 = value!;
+                            await box3.put("lan", value);
+                          
+                        },
+                        items: list2.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                  )
+                ],
               ),
             ),
           ),
           SizedBox(
             height: 45,
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Text(
+          ExpansionTile(
+            title: Text(
               'About',
               style: TextStyle(
                 fontFamily: 'Montserrat',
@@ -177,6 +249,14 @@ class _HomeState extends State<Home> {
                 fontWeight: FontWeight.w700,
               ),
             ),
+            children: [Text(
+              'whattttttttttttttttttttttttttttttttttttsa',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              ),
+            )],
           ),
           SizedBox(
             height: 45,

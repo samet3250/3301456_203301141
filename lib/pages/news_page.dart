@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:my_news_app/content.dart';
 import 'package:my_news_app/model/news_model.dart';
 import 'package:my_news_app/news_api.dart';
@@ -10,6 +11,7 @@ import 'package:word_selectable_text/word_selectable_text.dart';
 import 'package:translator/translator.dart';
 
 import '../word_selectable_scrapping.dart';
+var box=Hive.box<news>("News_all");
 
 class newsPage extends StatefulWidget {
   late String imageUrl;
@@ -138,25 +140,19 @@ class _newsPageState extends State<newsPage> {
               ], color: Colors.white, borderRadius: BorderRadius.circular(25)),
               child: IconButton(
                   onPressed: () {
-                    bookmark_list.add(newsBox(
+
+                    box.add(news(                        
+                        url:widget.urlsc,
+                        imageUrl: widget.imageUrl,
+                        time: widget.time,
+                        title: widget.title,
+                        category: "aa",
+                        text: "aa",
+                        writer: "aa",
+                        ));
+/*                     bookmark_list.add(newsBox(
                         urlscrap:widget.urlsc,
-                        futureWidget:Text("sss"),/* FutureBuilder(
-          future:getcontent(widget.urlsc),//"https://www.bbc.com/news/world-latin-america-65381624"
-          builder: (context, snapshot) {
-            
-            
-            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            print("newspage yukleniyor");
-        if(snapshot.hasData){
-          var metin= snapshot.data!;
-          return FutureWordSelectableText(metin: metin);
-        }else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else
-             { return const CircularProgressIndicator();}
-      
-        },
-          ) , */
+                        futureWidget: widget.futureWidget,
                         imageUrl: widget.imageUrl,
                         title: widget.title,
                         subtitle: widget.subtitle,
@@ -164,7 +160,7 @@ class _newsPageState extends State<newsPage> {
                         writer: widget.writer,
                         category: widget.category,
                         //text: widget.text
-                        ));
+                        )); */
                   },
                   icon: Padding(
                     padding: const EdgeInsets.all(5),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_news_app/content.dart';
 import 'package:my_news_app/model/categories_model.dart';
 import 'package:my_news_app/widget/create_news.dart';
 
@@ -20,6 +21,7 @@ class _HomeTabbarPagesState extends State<HomeTabbarPages>
     // TODO: implement initState
     super.initState();
     tabBarController = TabController(length: categories.length, vsync: this);
+
   }
 
   @override

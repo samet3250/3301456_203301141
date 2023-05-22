@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_news_app/model/news_model.dart';
 import 'package:my_news_app/news_api.dart';
+import 'package:my_news_app/pages/home_pages/home.dart';
 import 'package:my_news_app/widget/newsbox.dart';
 import 'package:translator/translator.dart';
 import 'package:word_selectable_text/word_selectable_text.dart';
@@ -25,7 +26,7 @@ class _FutureWordSelectableTextState extends State<FutureWordSelectableText> {
                     style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
                     onWordTapped: (word, index) {
                       translator
-                          .translate(word, from: 'en', to: 'tr')
+                          .translate(word, from: 'en', to: box3.isNotEmpty? box3.get('lan'):'tr')
                           .then((value) {
                         SnackBar snackBar = SnackBar(
                           dismissDirection: DismissDirection.none,

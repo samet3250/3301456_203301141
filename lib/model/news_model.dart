@@ -1,48 +1,46 @@
 
  import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
+import 'package:hive/hive.dart';
+part 'news_model.g.dart';
+@HiveType(typeId: 1)
 class news{
-  String imageUrl;
-  String title;
-  String subtitle;
-  String category;
-  String writer;
-  String time;
-  final text;
-  String url;
-  news({this.imageUrl="aa",this.title="aa",this.category="aa",this.subtitle="aa",this.text,this.time="aa",this.writer="aa",this.url="aa"});
-  //news({this.imageUrl="assets/togg.jpg", this.title="title_gelecek ", this.subtitle="subtitle_gelecek",this.category='category_gelecek', this.writer='writer_gelecek', this.time="time_gelecek",this.text="text_gelecek"});
-  factory news.fromJson(Map<String,dynamic> json){
-    // if(json['author']!=null &&json['title']!=null&&json['urlToImage']!=null&&json['publishedAt']!=null&&json['content']!=null){
-      return news(
 
-      writer:"aa",// json['author'] as String,
-      title:"aa",// json['title'] as String,
-      imageUrl: "aa",//json['urlToImage']!=null? json['urlToImage'] as String:"https://trthaberstatic.cdn.wp.trt.com.tr/resimler/1962000/togg-aa-1963758_1.jpg",
-      time: "aa",//(json['publishedAt'] as String).replaceAll("T","|").replaceAll("Z", ""),
-      text:"aa",// json['content'] as String,
-      //json['content'] as String
-      subtitle:"aa",// json['content'] as String,
-      url:"aa",// json['url'] as String,
-      category: "techonology",
-/*       writer: json['author']==null? "aasa": json['author'] as String,
-      title: json['title']==null?"assa":json['title']as String,
-      imageUrl: json['urlToImage']==null? "assets/togg.jpg":json['urlToImage'] as String,
-      time: json['publishedAt']==null? "asas":json['publishedAt'] as String,
-      text: json['content']==null? "sasa":json['content'] as String,
-      subtitle: json['content'] ==null?"asas":json['content'] as String,
-      category: "techonology", */
-
-    );
  
+
+
+  @HiveField(0,defaultValue: "aa")
+  String imageUrl;
+  @HiveField(1,defaultValue: "aa")
+  String title;
+  @HiveField(2,defaultValue: "aa")
+  String subtitle;
+  @HiveField(3,defaultValue: "aa")
+  String category;
+  @HiveField(4,defaultValue: "aa")
+  String writer;
+  @HiveField(5,defaultValue: "aa")
+  String time;
+  @HiveField(6,defaultValue: "aallll")
+  final text;
+  @HiveField(7,defaultValue: "aa")
+  String url;
+  @HiveField(8)
+  String futureWidget;
+  news({ this.futureWidget="aa",this.imageUrl="aa",this.title="aa",this.category="aa", this.subtitle="aa",this.text,this.time="aa",this.writer="aa",this.url="aa"});
+  //news({this.imageUrl="assets/togg.jpg", this.title="title_gelecek ", this.subtitle="subtitle_gelecek",this.category='category_gelecek', this.writer='writer_gelecek', this.time="time_gelecek",this.text="text_gelecek"});
+  @override
+  String toString() {
+    // TODO: implement toString
+    
+    return url+","+imageUrl+","+time+","+title+"\n";
   }
 }
 
 /* List<news>newsList=List.generate(500, (index) =>   news(imageUrl:'assets/togg.jpg', title:'Donald Trump indicted by Manhattan grand jury on more than 30 counts related to business fraud', subtitle:"Dermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problems.Dermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problems",category: 'Technology', writer: 'Jackson potter', time:"07 May  07:19",text:"Dermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problems.Dermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problemsDermatology is the branch of medicine dealing with the skin. It is a speciality with both medical and surgical aspects. A dermatologist is a specialist doctor who manages diseases related to skin, hair and nails and some cosmetic problems"),
 ); */
 
-List<List<news>> AllLists=[
+/* List<List<news>> AllLists=[
   newsList,
   newsList,
   newsList,
@@ -74,5 +72,5 @@ List<news>newsList=[
   
 ]; 
 
-
+ */
  

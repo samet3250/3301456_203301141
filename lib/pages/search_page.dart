@@ -42,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
 
     print("uzunluk: ${uzunluk}");
     print("indexxlist: ${indexxList}");
-    print(control);
+    
   }
 
   @override
