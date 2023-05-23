@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "863287440114",
+    "project_id": "flutter-firebase-a3152",
+    "storage_bucket": "flutter-firebase-a3152.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863287440114:android:68c215f025ee93b200d66b",
+        "android_client_info": {
+          "package_name": "com.example.my_news_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863287440114-j3k52554btaag86qk9t3jhelbccrurmv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXH8WU4n5rj1osW34Uan5womGZ8Ox2HRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863287440114-j3k52554btaag86qk9t3jhelbccrurmv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

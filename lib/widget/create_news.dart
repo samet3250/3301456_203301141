@@ -72,197 +72,206 @@ class _NewsBycategoryState extends State<NewsBycategory> {
   Widget build(BuildContext context) {
      if (widget.ind==1&&box2.isNotEmpty){
       widget.url="https://www.cnbc.com/${box2.get("cat")}/";
+
     } 
     print("kategori yukleniyor");
           // var box=Hive.box("News_all");
     // box.clear();
-    return FutureBuilder(future: getcontent(widget.url,widget.ind),
-    builder: (context, snapshot) {
-            
-            
-            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-        if(snapshot.hasData){
-          var metin= snapshot.data!;
-          return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) {
-            // box.add(metin[index].url);
-           print("newspage yukleniyor");
-            if(control1==true &&widget.ind==0){
-        for (var i = 0; i < metin.length; i++) {
-         titleList.add(metin[i].title);
-         var ne=metin[i]; 
-        searchList.add(SearchNotEmptyBox(
-            imageUrl: ne.imageUrl,
-            time: ne.time,
-            title: ne.title,
-            category:  ne.category,
-            subtitle:  ne.subtitle,
-            urlll: ne.url,
-            writer:  ne.writer
-            
-            ));
-            
-         }
-        control1=false;   
-    } 
-                if(control2==true &&widget.ind==1){
-        for (var i = 0; i < metin.length; i++) {
-         titleList.add(metin[i].title);
-         var ne=metin[i]; 
-        searchList.add(SearchNotEmptyBox(
-            imageUrl: ne.imageUrl,
-            time: ne.time,
-            title: ne.title,
-            category:  ne.category,
-            subtitle:  ne.subtitle,
-            urlll: ne.url,
-            writer:  ne.writer
-            ));
-            
-         }
-        control2=false;   
-    }            if(control3==true &&widget.ind==2){
-        for (var i = 0; i < metin.length; i++) {
-         titleList.add(metin[i].title);
-         var ne=metin[i]; 
-        searchList.add(SearchNotEmptyBox(
-            imageUrl: ne.imageUrl,
-            time: ne.time,
-            title: ne.title,
-            category:  ne.category,
-            subtitle:  ne.subtitle,
-            urlll: ne.url,
-            writer:  ne.writer
-            ));
-            
-         }
-        control3=false;   
-    }  
-                if(control4==true &&widget.ind==3){
-        for (var i = 0; i < metin.length; i++) {
-         titleList.add(metin[i].title);
-         var ne=metin[i]; 
-        searchList.add(SearchNotEmptyBox(
-            imageUrl: ne.imageUrl,
-            time: ne.time,
-            title: ne.title,
-            category:  ne.category,
-            subtitle:  ne.subtitle,
-            urlll: ne.url,
-            writer:  ne.writer
-            ));
-            
-         }
-        control4=false;   
-    } 
-                if(control5==true &&widget.ind==4){
-        for (var i = 0; i < metin.length; i++) {
-         titleList.add(metin[i].title);
-         var ne=metin[i]; 
-        searchList.add(SearchNotEmptyBox(
-            imageUrl: ne.imageUrl,
-            time: ne.time,
-            title: ne.title,
-            category:  ne.category,
-            subtitle:  ne.subtitle,
-            urlll: ne.url,
-            writer:  ne.writer
-            ));
-            
-         }
-        control5=false;   
-    } 
-                if(control6==true &&widget.ind==5){
-        for (var i = 0; i < metin.length; i++) {
-         titleList.add(metin[i].title);
-         var ne=metin[i]; 
-        searchList.add(SearchNotEmptyBox(
-            imageUrl: ne.imageUrl,
-            time: ne.time,
-            title: ne.title,
-            category:  ne.category,
-            subtitle:  ne.subtitle,
-            urlll: ne.url,
-            writer:  ne.writer
-            ));
-            
-         }
-        control6=false;   
-    } 
-                if(control7==true &&widget.ind==6){
-        for (var i = 0; i < metin.length; i++) {
-         titleList.add(metin[i].title);
-         var ne=metin[i]; 
-        searchList.add(SearchNotEmptyBox(
-            imageUrl: ne.imageUrl,
-            time: ne.time,
-            title: ne.title,
-            category:  ne.category,
-            subtitle:  ne.subtitle,
-            urlll: ne.url,
-            writer:  ne.writer
-            ));
-            
-         }
-        control7=false;   
-    }       
-            return newsBox(
-          category: metin[index].category,
+    return GestureDetector(
+      onVerticalDragEnd: (details) {
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        setState(() {
           
-          futureWidget: FutureBuilder(
-          future:getcc(metin[index].url),//"https://www.bbc.com/news/world-latin-america-65381624"
-          builder: (context, snapshot) {
+        });
+      },
+      child: FutureBuilder(future: getcontent(widget.url,widget.ind),
+      builder: (context, snapshot) {
+              
+              
+              //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+          if(snapshot.hasData){
+            var metin= snapshot.data!;
+            return ListView.builder(itemCount: metin.length,itemBuilder:(context, index) {
+              // box.add(metin[index].url);
+             print("newspage yukleniyor");
+              if(control1==true &&widget.ind==0){
+          for (var i = 0; i < metin.length; i++) {
+           titleList.add(metin[i].title);
+           var ne=metin[i]; 
+          searchList.add(SearchNotEmptyBox(
+              imageUrl: ne.imageUrl,
+              time: ne.time,
+              title: ne.title,
+              category:  ne.category,
+              subtitle:  ne.subtitle,
+              urlll: ne.url,
+              writer:  ne.writer
+              
+              ));
+              
+           }
+          control1=false;   
+      } 
+                  if(control2==true &&widget.ind==1){
+          for (var i = 0; i < metin.length; i++) {
+           titleList.add(metin[i].title);
+           var ne=metin[i]; 
+          searchList.add(SearchNotEmptyBox(
+              imageUrl: ne.imageUrl,
+              time: ne.time,
+              title: ne.title,
+              category:  ne.category,
+              subtitle:  ne.subtitle,
+              urlll: ne.url,
+              writer:  ne.writer
+              ));
+              
+           }
+          control2=false;   
+      }            if(control3==true &&widget.ind==2){
+          for (var i = 0; i < metin.length; i++) {
+           titleList.add(metin[i].title);
+           var ne=metin[i]; 
+          searchList.add(SearchNotEmptyBox(
+              imageUrl: ne.imageUrl,
+              time: ne.time,
+              title: ne.title,
+              category:  ne.category,
+              subtitle:  ne.subtitle,
+              urlll: ne.url,
+              writer:  ne.writer
+              ));
+              
+           }
+          control3=false;   
+      }  
+                  if(control4==true &&widget.ind==3){
+          for (var i = 0; i < metin.length; i++) {
+           titleList.add(metin[i].title);
+           var ne=metin[i]; 
+          searchList.add(SearchNotEmptyBox(
+              imageUrl: ne.imageUrl,
+              time: ne.time,
+              title: ne.title,
+              category:  ne.category,
+              subtitle:  ne.subtitle,
+              urlll: ne.url,
+              writer:  ne.writer
+              ));
+              
+           }
+          control4=false;   
+      } 
+                  if(control5==true &&widget.ind==4){
+          for (var i = 0; i < metin.length; i++) {
+           titleList.add(metin[i].title);
+           var ne=metin[i]; 
+          searchList.add(SearchNotEmptyBox(
+              imageUrl: ne.imageUrl,
+              time: ne.time,
+              title: ne.title,
+              category:  ne.category,
+              subtitle:  ne.subtitle,
+              urlll: ne.url,
+              writer:  ne.writer
+              ));
+              
+           }
+          control5=false;   
+      } 
+                  if(control6==true &&widget.ind==5){
+          for (var i = 0; i < metin.length; i++) {
+           titleList.add(metin[i].title);
+           var ne=metin[i]; 
+          searchList.add(SearchNotEmptyBox(
+              imageUrl: ne.imageUrl,
+              time: ne.time,
+              title: ne.title,
+              category:  ne.category,
+              subtitle:  ne.subtitle,
+              urlll: ne.url,
+              writer:  ne.writer
+              ));
+              
+           }
+          control6=false;   
+      } 
+                  if(control7==true &&widget.ind==6){
+          for (var i = 0; i < metin.length; i++) {
+           titleList.add(metin[i].title);
+           var ne=metin[i]; 
+          searchList.add(SearchNotEmptyBox(
+              imageUrl: ne.imageUrl,
+              time: ne.time,
+              title: ne.title,
+              category:  ne.category,
+              subtitle:  ne.subtitle,
+              urlll: ne.url,
+              writer:  ne.writer
+              ));
+              
+           }
+          control7=false;   
+      }       
+              return newsBox(
+            category: metin[index].category,
             
+            futureWidget: FutureBuilder(
+            future:getcc(metin[index].url),//"https://www.bbc.com/news/world-latin-america-65381624"
+            builder: (context, snapshot) {
+              
+              
+              //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+              
+          if(snapshot.hasData){
+            var metin= snapshot.data!;
             
-            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+     
+    
             
-        if(snapshot.hasData){
-          var metin= snapshot.data!;
+            return FutureWordSelectableText(metin: metin[0]);
+          }else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else
+               { return const CircularProgressIndicator();}
+        
+          },
+            ),
+            imageUrl:metin[index].imageUrl ,
+            subtitle: FutureBuilder(
+            future:getcc(metin[index].url),//"https://www.bbc.com/news/world-latin-america-65381624"
+            builder: (context, snapshot) {
+              
+              
+              //print((urlkey.currentState!.urlp)==null?"null":"null degil");
+              
+          if(snapshot.hasData){
+            var metin= snapshot.data!;
+            return Text(metin[1]);
+          }else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else
+               { return const CircularProgressIndicator();}
+            
+          },
+            ),
+            time: metin[index].time,
+            title: metin[index].title,
+            urlscrap: metin[index].url,);
+            
+            } 
+            ); 
           
- 
-
+          }else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else
+               { return const CircularProgressIndicator();}
           
-          return FutureWordSelectableText(metin: metin[0]);
-        }else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else
-             { return const CircularProgressIndicator();}
-      
-        },
+          }
+          
+          
           ),
-          imageUrl:metin[index].imageUrl ,
-          subtitle: FutureBuilder(
-          future:getcc(metin[index].url),//"https://www.bbc.com/news/world-latin-america-65381624"
-          builder: (context, snapshot) {
-            
-            
-            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            
-        if(snapshot.hasData){
-          var metin= snapshot.data!;
-          return Text(metin[1]);
-        }else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else
-             { return const CircularProgressIndicator();}
-          
-        },
-          ),
-          time: metin[index].time,
-          title: metin[index].title,
-          urlscrap: metin[index].url,);
-          
-          } 
-          ); 
-        
-        }else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else
-             { return const CircularProgressIndicator();}
-        
-        }
-        
-        
-        );  
+    );  
         
         /* ListView.builder(
               

@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_news_app/content.dart';
+import 'package:my_news_app/firebase_options.dart';
 import 'package:my_news_app/news_api.dart';
 import 'package:my_news_app/pages/bookmark_page.dart';
 import 'package:my_news_app/pages/home_pages/home.dart';
@@ -11,15 +13,26 @@ import 'package:my_news_app/pages/search_page.dart';
 import 'package:my_news_app/word_selectable_scrapping.dart';
 
 import 'model/news_model.dart';
-
-void main() async{
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+    await Hive.initFlutter("news_App");
+   Hive.registerAdapter(newsAdapter());
+   await Hive.openBox<news>("News_all");
+   await Hive.openBox("category");
+   await Hive.openBox("language"); 
+  runApp(const MyApp());
+}
+/* void main() async{
    await Hive.initFlutter("news_App");
    Hive.registerAdapter(newsAdapter());
    await Hive.openBox<news>("News_all");
    await Hive.openBox("category");
    await Hive.openBox("language");
    
-   runApp(const MyApp());}
+   runApp(const MyApp());} */
 
 /* Future? Newsscrap(String url,int ind){ getcontent(url, ind).then((metin) {
  /* print("---------------------------------------------------------------------------------------------");

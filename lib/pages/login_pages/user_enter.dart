@@ -1,16 +1,38 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_news_app/pages/login_pages/register_page.dart';
 
 import '../home_pages/home.dart';
 
-class userEnter extends StatelessWidget {
+class userEnter extends StatefulWidget {
   userEnter({super.key});
 
-  String email = "", password = "";
+  @override
+  State<userEnter> createState() => _userEnterState();
+}
 
-  
+class _userEnterState extends State<userEnter> {
+  late String email , password ;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late FirebaseAuth auth;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    auth=FirebaseAuth.instance;
 
+        auth.authStateChanges().listen((User? user) {
+      if (user == null) {
+        debugPrint('User oturumu kapalı');
+      } else {
+        debugPrint(
+            'User oturum açık ${user.email} ve email durumu ${user.emailVerified}');
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,19 +55,32 @@ class userEnter extends StatelessWidget {
           Form(
               key: formKey,
               //autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: Column(
-                children: [
-                  emailTexField(context),
-                  SizedBox(height: 10),
-                  ParolaTextField(context),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  navButton(context)
-                ],
+              child: Expanded(
+                child: Column(
+                  children: [
+                    emailTexField(context),
+                    SizedBox(height: 10),
+                    ParolaTextField(context),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    navButton(context),
+                                    Expanded(
+                                      child: Container(
+                                      margin: EdgeInsets.only(bottom: 15),  
+                                      alignment: Alignment.bottomCenter,
+                                       child: TextButton(child: Text("Don't have an account? Register here."),onPressed: () {              
+                                         Navigator.of(context)
+                                       .push(MaterialPageRoute(builder: (context) => RegisterPage()));} ,),
+                                                                       ),
+                                    )
+                  ],
+                  
+                ),
               ))
         ],
       ),
+      
     );
   }
 
@@ -73,6 +108,8 @@ class userEnter extends StatelessWidget {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Home()));
             }
+            createuserandemail();
+
           },
           child: Text('Log In',
               style: TextStyle(
@@ -159,5 +196,54 @@ class userEnter extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void createuserandemail()async{
+    var _userCredential=await auth.createUserWithEmailAndPassword(email: email,password: password);
+    print(_userCredential.toString());
+  }
+
+
+  void loginUserEmailAndPassword() async {
+    try {
+      var _userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      debugPrint(_userCredential.toString());
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void signOutUser() async {
+
+    await auth.signOut();
+  }
+
+  void deleteUser() async {
+    if (auth.currentUser != null) {
+      await auth.currentUser!.delete();
+    } else {
+      debugPrint('Kullanıcı oturum açmadığı için silinemez');
+    }
+  }
+
+  void changePassword() async {
+    try {
+      await auth.currentUser!.updatePassword('password');
+      await auth.signOut();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        debugPrint('reauthenticate olunacak');
+        var credential =
+            EmailAuthProvider.credential(email: email, password: password);
+        await auth.currentUser!.reauthenticateWithCredential(credential);
+
+        await auth.currentUser!.updatePassword('password');
+        await auth.signOut();
+        debugPrint('şifre güncellendi');
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }
