@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_news_app/pages/login_pages/user_enter.dart';
 
 class userEnterWith extends StatefulWidget {
@@ -78,7 +80,9 @@ class _userEnterWithState extends State<userEnterWith> {
           height: 40,
           fit: BoxFit.cover,
         ),
-        onPressed: () {},
+        onPressed: () {
+           googleIleGiris();
+        },
       ),
     );
   }
@@ -110,5 +114,22 @@ class _userEnterWithState extends State<userEnterWith> {
                   fontWeight: FontWeight.w700)),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
         ));
+  }
+
+  void googleIleGiris() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

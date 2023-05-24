@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_news_app/pages/login_pages/forget_password.dart';
 import 'package:my_news_app/pages/login_pages/register_page.dart';
 
 import '../home_pages/home.dart';
@@ -29,7 +30,7 @@ class _userEnterState extends State<userEnter> {
         debugPrint('User oturumu kapalı');
       } else {
         debugPrint(
-            'User oturum açık ${user.email} ve email durumu ${user.emailVerified}');
+            'User oturum açık ${user.email} ');
       }
     });
   }
@@ -65,6 +66,9 @@ class _userEnterState extends State<userEnter> {
                       height: 15,
                     ),
                     navButton(context),
+                    TextButton(child: Text("forgot my password"),onPressed: () {              
+                                         Navigator.of(context)
+                                       .push(MaterialPageRoute(builder: (context) => forgetPassword()));} ,),
                                     Expanded(
                                       child: Container(
                                       margin: EdgeInsets.only(bottom: 15),  
@@ -104,11 +108,11 @@ class _userEnterState extends State<userEnter> {
             bool validate = formKey.currentState!.validate();
             if (validate) {
               formKey.currentState!.save();
+              
               formKey.currentState!.reset();
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Home()));
+
             }
-            createuserandemail();
+            loginUserEmailAndPassword();
 
           },
           child: Text('Log In',
@@ -208,9 +212,47 @@ class _userEnterState extends State<userEnter> {
     try {
       var _userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+                    Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Home()));    
       debugPrint(_userCredential.toString());
     } catch (e) {
-      debugPrint(e.toString());
+      
+                              SnackBar snackBar = SnackBar(
+                          dismissDirection: DismissDirection.none,
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          content: Card(
+                            shadowColor: Colors.black,
+                            elevation: 5,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(left: 25),
+                                    child: Text(
+                                      e.toString(),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Monserrat',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400),
+                                    )),
+                                IconButton(
+                                    onPressed: () {
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
+                                    },
+                                    icon: Image.asset(
+                                      'assets/icons/back.png',
+                                      color: Colors.black,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 

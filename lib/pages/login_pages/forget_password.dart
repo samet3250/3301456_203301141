@@ -1,15 +1,17 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatefulWidget {
-   RegisterPage({super.key});
+class forgetPassword extends StatefulWidget {
+   forgetPassword({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<forgetPassword> createState() => _forgetPasswordState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-    String e_mail="", password_="";
+class _forgetPasswordState extends State<forgetPassword> {
+    late String e_mail, password_;
     String passwordagain="",name="",surname="";
     
   GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
@@ -69,16 +71,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
                 
               )),
-              Form(
-                key: formKey3,
-                child:Parola(context)),
+
               Form(
                 key: formKey4,
                 child: Column(
                 children: [
-                    SizedBox(height: 10),
-                    Parola_control(context),
-                    SizedBox(height: 10),
+
                     createButton(context)
                 ],
               ))
@@ -104,16 +102,16 @@ Container createButton(BuildContext context) {
         child: ElevatedButton(
           onPressed: () {
             bool validate = formKey2.currentState!.validate();
-            bool validate2 = formKey3.currentState!.validate();
+            // bool validate2 = formKey3.currentState!.validate();
             bool validate3 = formKey4.currentState!.validate();
 
-            if (validate &&validate2&&validate3) {
+            if (validate) {
               formKey2.currentState!.save();
-              formKey3.currentState!.save();
-              createuserandemail();
+              // formKey3.currentState!.save();
+              forgot_password();
               formKey2.currentState!.reset();
-              formKey3.currentState!.reset();
-              formKey4.currentState!.reset();
+              // formKey3.currentState!.reset();
+              // formKey4.currentState!.reset();
               Navigator.of(context)
                   .pop();
             }
@@ -150,7 +148,7 @@ Container createButton(BuildContext context) {
             focusedBorder: InputBorder.none,
             contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
             errorStyle: TextStyle(color: Colors.red),
-            hintText: 'Password'),
+            hintText: 'New Password'),
         validator: (value) {
           if (value!.length < 5) {
             return 'Password must be at least 5 character';
@@ -328,5 +326,52 @@ Container createButton(BuildContext context) {
     void createuserandemail()async{
     var _userCredential=await auth.createUserWithEmailAndPassword(email: e_mail,password: password_);
     print(_userCredential.toString());
+
   } 
+      void forgot_password() async {
+ try {
+ 
+    var _userCredential=await auth.sendPasswordResetEmail(email: e_mail).then((value) => print("gonderildi"));
+    
+
+    } catch (e) {
+      
+                              SnackBar snackBar = SnackBar(
+                          dismissDirection: DismissDirection.none,
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          content: Card(
+                            shadowColor: Colors.black,
+                            elevation: 5,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(left: 25),
+                                    child: Text(
+                                      e.toString(),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Monserrat',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400),
+                                    )),
+                                IconButton(
+                                    onPressed: () {
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
+                                    },
+                                    icon: Image.asset(
+                                      'assets/icons/back.png',
+                                      color: Colors.black,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    }
 }

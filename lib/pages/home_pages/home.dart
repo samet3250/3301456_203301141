@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:my_news_app/content.dart';
 import 'package:my_news_app/pages/bookmark_page.dart';
@@ -22,6 +24,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int currentIndex = 0;
   late List bottonNavBarPages;
+  late FirebaseAuth auth;
+
 
   @override
   void initState() {
@@ -29,7 +33,8 @@ class _HomeState extends State<Home> {
     super.initState();
 
     bottonNavBarPages = [HomeTabbarPages(), SearchPage(), Bookmark()];
-
+    auth=FirebaseAuth.instance;
+    
 
   }
   String dropdownValue1 = list.first;
@@ -274,6 +279,7 @@ class _HomeState extends State<Home> {
           ),
           GestureDetector(
             onTap: () {
+              signOutUser();
               Navigator.popUntil(context,  ModalRoute.withName('/'));
             },
             child: CircleAvatar(
@@ -346,5 +352,9 @@ class _HomeState extends State<Home> {
 
           
         ]);
+  }
+    void signOutUser() async {
+
+    await auth.signOut();
   }
 }
