@@ -1,21 +1,21 @@
-import 'package:basic_utils/basic_utils.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
-import 'package:my_news_app/content.dart';
+
 import 'package:my_news_app/model/location.dart';
 import 'package:my_news_app/model/path_provider.dart';
 import 'package:my_news_app/model/weather.dart';
 import 'package:my_news_app/pages/bookmark_page.dart';
 import 'package:my_news_app/pages/home_pages/home_tabbar_pages.dart';
-import 'package:my_news_app/pages/login_pages/register_page.dart';
+
 import 'package:my_news_app/pages/login_pages/user_enterwith.dart';
 import 'package:my_news_app/pages/search_page.dart';
 import 'package:my_news_app/pages/settings_page.dart';
-import 'package:my_news_app/widget/create_news.dart';
+
 import 'package:shimmer/shimmer.dart';
 
 String? local2;
