@@ -26,12 +26,19 @@ class _SettingsPageState extends State<SettingsPage> {
   String dropdownValue2 = list.first;
     late FirebaseAuth auth;
   late FirebaseFirestore firestore;
+     setFirstColor()async{
+      if(box4.get("color")==null){
+        await box4.put("color", "red");
+      }
+
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
        firestore=FirebaseFirestore.instance;
     auth=FirebaseAuth.instance;
+    setFirstColor();
   }
   @override
   Widget build(BuildContext context) {
@@ -90,124 +97,137 @@ class _SettingsPageState extends State<SettingsPage> {
       body:    Column(
         children: [
           
-             Text('Common'),
-              SizedBox(height: 15,),
-              ListTile(
-                leading: Icon(Icons.language),
-                title: Text('Language'),
-                subtitle: Text(languages()),
-                trailing: DropdownButton<String>(
-                          //value: dropdownValue,
-                          // hint: Text("translate to:"),
-                          icon: const Icon(Icons.more_vert,color: Colors.black,),
-    
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          underline: Container(
-                            height: 0,
-                            color: Colors.deepPurpleAccent,
+                Padding(padding:EdgeInsets.only(left: 10,top: 5) ,child: Align(alignment:Alignment.centerLeft ,child: Text("Common",style: TextStyle(fontFamily: "Montserrat",fontSize:14 ),))),
+
+              SizedBox(height: 10,),
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(Icons.language),
+                  title: Text('Language'),
+                  subtitle: Text(languages()),
+                  trailing: DropdownButton<String>(
+                            //value: dropdownValue,
+                            // hint: Text("translate to:"),
+                            icon: const Icon(Icons.more_vert,color: Colors.black,),
+                  
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.deepPurple),
+                            underline: Container(
+                              height: 0,
+                              color: Colors.deepPurpleAccent,
+                            ),
+                            onChanged: (String? value)
+                              // This is called when the user selects an item.
+                              async {
+                                dropdownValue2 = value!;
+                                await box3.put("lan", value);
+                                fireStoreVeriGuncelle();
+                                setState(() {
+                                  
+                                });
+                              
+                            },
+                            items: list2.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                           ),
-                          onChanged: (String? value)
-                            // This is called when the user selects an item.
-                            async {
-                              dropdownValue2 = value!;
-                              await box3.put("lan", value);
-                              fireStoreVeriGuncelle();
-                              setState(() {
-                                
-                              });
-                            
-                          },
-                          items: list2.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
+                ),
               ),
-              ListTile(
-                leading: Icon(Icons.location_on_outlined),
-                title: Text('Location'),
-                subtitle: Text(box2.get("cat").toString().replaceFirst(box2.get("cat").toString()[0], box2.get("cat").toString()[0].toUpperCase())),
-                trailing: DropdownButton<String>(
-                          //value: dropdownValue,
-                          // hint: Text("choose"),
-                          icon: const Icon(Icons.more_vert),
-                          
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          underline: Container(
-                            height: 0,
-                            color: Colors.deepPurpleAccent,
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(Icons.location_on_outlined),
+                  title: Text('Location'),
+                  subtitle: Text(box2.get("cat").toString().replaceFirst(box2.get("cat").toString()[0], box2.get("cat").toString()[0].toUpperCase())),
+                  trailing: DropdownButton<String>(
+                            //value: dropdownValue,
+                            // hint: Text("choose"),
+                            icon: const Icon(Icons.more_vert),
+                            
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.deepPurple),
+                            underline: Container(
+                              height: 0,
+                              color: Colors.deepPurpleAccent,
+                            ),
+                            onChanged: (String? value)async{
+                              // This is called when the user selects an item.
+                               
+                                dropdownValue1 = value!;
+                                await box2.put("cat", value);
+                                setState(() {
+                                  
+                                });
+                              
+                            },
+                            items: list.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                           ),
-                          onChanged: (String? value)async{
-                            // This is called when the user selects an item.
-                             
-                              dropdownValue1 = value!;
-                              await box2.put("cat", value);
-                              setState(() {
-                                
-                              });
-                            
-                          },
-                          items: list.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
+                ),
               ),
-    ListTile(
-                leading: Icon(Icons.format_paint),
-                title: Text('Color'),
-                subtitle: Text(box4.get("color").toString().replaceFirst(box4.get("color").toString()[0],box4.get("color").toString()[0].toUpperCase())),
-                trailing: DropdownButton<String>(
-                          //value: dropdownValue,
-                          // hint: Text("choose"),
-                          icon: const Icon(Icons.more_vert),
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          underline: Container(
-                            height: 0,
-                            color: Colors.deepPurpleAccent,
+    Card(
+      elevation: 5,
+      child: ListTile(
+                  leading: Icon(Icons.format_paint),
+                  title: Text('Color'),
+                  subtitle: Text(box4.get("color").toString().replaceFirst(box4.get("color").toString()[0],box4.get("color").toString()[0].toUpperCase())),
+                  trailing: DropdownButton<String>(
+                            //value: dropdownValue,
+                            // hint: Text("choose"),
+                            icon: const Icon(Icons.more_vert),
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.deepPurple),
+                            underline: Container(
+                              height: 0,
+                              color: Colors.deepPurpleAccent,
+                            ),
+                            onChanged: (String? value)async{
+                              // This is called when the user selects an item.
+                               
+                                // dropdownValue1 = value!;
+                                await box4.put("color", value);
+                                setState(() {
+                                  
+                                });
+                              
+                            },
+                            items: list3.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                           ),
-                          onChanged: (String? value)async{
-                            // This is called when the user selects an item.
-                             
-                              // dropdownValue1 = value!;
-                              await box4.put("color", value);
-                              setState(() {
-                                
-                              });
-                            
-                          },
-                          items: list3.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-              ),
+                ),
+    ),
               
             
           
-            Text("Account"),
-            SizedBox(height: 15,)  ,    
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Delete Account'),
-              subtitle: Text(auth.currentUser!.email.toString()),
-              trailing: GestureDetector(
-                onTap: () {
-                  
-                 
-                  FireBaseDelete().then((value) {FireStoreDelete(value);});
-                  
-                },
-                child: Icon(Icons.delete),
+            Padding(padding: EdgeInsets.only(left: 10),child: Align(alignment:Alignment.centerLeft ,child: Text("Account",style: TextStyle(fontFamily: "Montserrat"),))),
+            SizedBox(height: 10,)  ,    
+            Card(
+              elevation: 5,
+              child: ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Delete Account'),
+                subtitle: Text(auth.currentUser!.email.toString()),
+                trailing: GestureDetector(
+                  onTap: () {
+                    
+                   
+                    FireBaseDelete().then((value) {FireStoreDelete(value);});
+                    
+                  },
+                  child: Icon(Icons.delete),
+                ),
               ),
             ),
 
@@ -320,11 +340,11 @@ if(_myUser!=null)
 
 
 
-  
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => userEnterWith()));
       await firestore.doc("users/${uid}").delete();
       
 
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => userEnterWith()));
+  
 
   
   

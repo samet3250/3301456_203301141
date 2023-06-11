@@ -39,10 +39,7 @@ class _HomeState extends State<Home> {
   late FirebaseFirestore firestore;
   var locationData=LocationHelper();
   WeatherData weatherData=WeatherData();
-   setFirstColor()async{
-      await box4.put("color", "red");
 
-  }
 
   @override
   void initState() {
@@ -70,7 +67,7 @@ class _HomeState extends State<Home> {
 
     }); */
       widget.ff =gecici;
-      setFirstColor();
+      
       
     });});
    firestore=FirebaseFirestore.instance;
