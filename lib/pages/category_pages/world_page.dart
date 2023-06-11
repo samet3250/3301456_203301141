@@ -30,6 +30,6 @@ class _WorldPageState extends State<WorldPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[2]);
+        body: createNewsListView[0]);
   }
 }

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_news_app/widget/create_news.dart';
 
 
-
-class EducationPage extends StatefulWidget {
-  EducationPage({super.key});
+class LocalPage extends StatefulWidget {
+  LocalPage({super.key});
 
   @override
-  State<EducationPage> createState() => _EducationPageState();
+  State<LocalPage> createState() => _LocalPageState();
 }
 
-class _EducationPageState extends State<EducationPage> {
+class _LocalPageState extends State<LocalPage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -24,13 +23,13 @@ class _EducationPageState extends State<EducationPage> {
             backgroundColor: Colors.red.shade400,
             elevation: 4,
             title: Text(
-              'EDUCATION',
+              'LOCAL',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[6]);
+        body: createNewsListView[1]);
   }
 }

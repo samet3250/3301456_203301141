@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
+import 'package:my_news_app/model/firebase_firestore.dart';
+import 'package:my_news_app/model/location.dart';
+import 'package:my_news_app/model/weather.dart';
+import 'package:my_news_app/pages/home_pages/home.dart';
 import 'package:my_news_app/pages/login_pages/user_enter.dart';
 
 class userEnterWith extends StatefulWidget {
@@ -8,9 +14,44 @@ class userEnterWith extends StatefulWidget {
 
   @override
   State<userEnterWith> createState() => _userEnterWithState();
+  
 }
 
+
+
 class _userEnterWithState extends State<userEnterWith> {
+  late FirebaseAuth auth;
+  late FirebaseFirestore firestore;
+  
+/*   Future<void> getLocationData() async{
+    locationData = LocationHelper();
+    
+    var konum=await locationData.getCurrentLocation();
+
+    // if(locationData.latitude == null || locationData.longitude == null){
+    //   print("Konum bilgileri gelmiyor.");
+
+    // }
+    
+      print("latitude: " + konum.latitude.toString());
+      print("longitude: " + konum.longitude.toString());
+    
+
+  } */
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      auth=FirebaseAuth.instance;
+    firestore=FirebaseFirestore.instance;
+
+    
+    
+   
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +59,9 @@ class _userEnterWithState extends State<userEnterWith> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Column(children: [
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
         Align(
           alignment: Alignment.topCenter,
           child: Container(
@@ -36,31 +79,16 @@ class _userEnterWithState extends State<userEnterWith> {
         SizedBox(
           height: 15,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 35),
-          child: Row(
-            children: [
-              withContainer('assets/icons/facebook1.png'),
-              SizedBox(
-                width: 10,
-              ),
-              withContainer('assets/icons/google.png'),
-              SizedBox(
-                width: 10,
-              ),
-              withContainer('assets/icons/twitter.png'),
-            ],
-          ),
-        )
+        withContainer('assets/icons/google.png')
       ]),
     );
   }
 
   Container withContainer(String url) {
     return Container(
-      //margin: EdgeInsets.fromLTRB(35,0, 35,0),
+      margin: EdgeInsets.fromLTRB(35,0, 35,0),
       height: 46,
-      width: (MediaQuery.of(context).size.width - 90) / 3,
+      width: MediaQuery.of(context).size.width/2.5,
       decoration: BoxDecoration(
           //border:Border.all(width: 1,color: Colors.red),
           color: Colors.white,
@@ -81,7 +109,7 @@ class _userEnterWithState extends State<userEnterWith> {
           fit: BoxFit.cover,
         ),
         onPressed: () {
-           googleIleGiris();
+          FirebaseFirestoreFonk.googleIleGiris(context, auth, firestore, Home());
         },
       ),
     );
@@ -116,20 +144,5 @@ class _userEnterWithState extends State<userEnterWith> {
         ));
   }
 
-  void googleIleGiris() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(credential);
-  }
 }

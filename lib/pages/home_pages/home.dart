@@ -1,13 +1,23 @@
+import 'package:basic_utils/basic_utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:my_news_app/content.dart';
+import 'package:my_news_app/model/location.dart';
+import 'package:my_news_app/model/path_provider.dart';
+import 'package:my_news_app/model/weather.dart';
 import 'package:my_news_app/pages/bookmark_page.dart';
 import 'package:my_news_app/pages/home_pages/home_tabbar_pages.dart';
+import 'package:my_news_app/pages/login_pages/register_page.dart';
 import 'package:my_news_app/pages/login_pages/user_enterwith.dart';
 import 'package:my_news_app/pages/search_page.dart';
+import 'package:my_news_app/pages/settings_page.dart';
 import 'package:my_news_app/widget/create_news.dart';
+import 'package:shimmer/shimmer.dart';
+
 String? local2;
 var box2=Hive.box("category");
 var box3=Hive.box("language");
@@ -15,8 +25,9 @@ List<String> list = <String>['turkey', 'france', 'united-kingdom', 'india'];
 List<String> list2 = <String>['tr', 'de', 'es', 'fr'];
 
 class Home extends StatefulWidget {
-  const Home({super.key});
-
+   Home({super.key});
+CounterStorage storage=CounterStorage();
+ String ff="User";
   @override
   State<Home> createState() => _HomeState();
 }
@@ -25,6 +36,9 @@ class _HomeState extends State<Home> {
   int currentIndex = 0;
   late List bottonNavBarPages;
   late FirebaseAuth auth;
+  late FirebaseFirestore firestore;
+  var locationData=LocationHelper();
+  WeatherData weatherData=WeatherData();
 
 
   @override
@@ -33,9 +47,32 @@ class _HomeState extends State<Home> {
     super.initState();
 
     bottonNavBarPages = [HomeTabbarPages(), SearchPage(), Bookmark()];
-    auth=FirebaseAuth.instance;
-    
+    widget.storage.readCounter().then((value) {setState(() {
+      List<String> ad_soyad=value.split(" ");
+      String gecici="";
+      for (var i = 0; i < ad_soyad.length; i++) {
+        gecici += ad_soyad[i].replaceAll(ad_soyad[i][0],ad_soyad[i][0].toUpperCase() )+" ";
+      }
+ /*      locationData.getCurrentLocation().then((value) {
+    if(locationData.latitude!=null && locationData.longitude!=null){
+      WeatherData WEATHER=WeatherData(lon: locationData.longitude,lat: locationData.latitude);
+      weatherData=WEATHER;
+      WEATHER.getWeatherElements();
+    }
+    else{
+      WeatherData NULLWEATHER=WeatherData();
+      
+      print("null değer");
+    }
 
+    }); */
+      widget.ff =gecici;
+      
+    });});
+   firestore=FirebaseFirestore.instance;
+    auth=FirebaseAuth.instance;
+
+    
   }
   String dropdownValue1 = list.first;
   String dropdownValue2 = list.first;
@@ -44,7 +81,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.red.shade400,
+            backgroundColor:appbarColor(),
             elevation: 2,
             automaticallyImplyLeading: false,
             titleSpacing: 0,
@@ -98,6 +135,17 @@ class _HomeState extends State<Home> {
         drawer: createDrawer(context),
         bottomNavigationBar: createBottomNavBar());
   }
+  Color appbarColor(){
+switch (box4.get("color").toString()) {
+  case "red": return Colors.red.shade400;
+  case "amber": return Colors.amber;
+  case "cyan": return Colors.cyan;
+  case "teal": return Colors.teal;
+    
+    
+  default: return Colors.red.shade400;
+}
+  }
 
   Container harf(String harf) {
     return Container(
@@ -146,151 +194,76 @@ class _HomeState extends State<Home> {
             ),
           ),
           SizedBox(
-            height: 25,
+            height: 10,
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                Navigator.of(context).pop();
-              });
+           FutureBuilder(
+            future:  fonn()            
+            
+            ,builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if(snapshot.hasData){
+                var data=snapshot.data;
+                if(data[0]!=""){
+                  return ListTile(
+                    leading: DateTime.now().hour<=19?
+          Image.asset("assets/cloudy.png",fit: BoxFit.contain)
+        
+        
+        
+      :Image.asset("assets/night.png",fit: BoxFit.contain,height: 40,width: 40,),
+                    title: Padding(padding: EdgeInsets.only(left: 8),child: Text(data[0],style: TextStyle(fontFamily: "Montserrat" ))),
+                    subtitle: Padding(padding: EdgeInsets.only(left: 8),child: Text(data[2],style: TextStyle(fontFamily: "Montserrat" ))),
+                    trailing: Text(data[1],style: TextStyle(fontSize:30,decorationThickness: 2,fontFamily: "Montserrat" ),),
+                  );
+                }
+                else{
+                  return SizedBox(height: 0,);
+                }
+              }
+              else if(snapshot.hasError){
+                return Text(snapshot.error.toString());
+
+              }
+              else{
+                return   Shimmer.fromColors(child: SingleChildScrollView(
+                  child: Padding(
+        padding: const EdgeInsets.only(top: 8, left: 15, right: 15, bottom: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          schimmerAnimationBox(),
+          
+            
+          ],
+        ),
+      ),
+                )
+                , baseColor: Colors.grey.shade300, highlightColor: Colors.grey.shade100,
+                ) ;
+              }
             },
-            child: Text(
-              'Profile',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.center,
-            ),
           ),
-          SizedBox(
-            height: 45,
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: GestureDetector(
-               onDoubleTap: () {
-                 
-                 //await box2.put("cat", "france");
-               },
-              child: ExpansionTile(
-                title: Text(
-                  'Settings',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: DropdownButton<String>(
-                        //value: dropdownValue,
-                        hint: Text("choose"),
-                        icon: const Icon(Icons.arrow_downward),
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.deepPurpleAccent,
-                        ),
-                        onChanged: (String? value)async{
-                          // This is called when the user selects an item.
-                           
-                            dropdownValue1 = value!;
-                            await box2.put("cat", value);
-                          
-                        },
-                        items: list.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                  ),
-                                        Align(
-                    alignment: Alignment.topLeft,
-                    child: DropdownButton<String>(
-                        //value: dropdownValue,
-                        hint: Text("translate to:"),
-                        icon: const Icon(Icons.arrow_downward),
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.deepPurpleAccent,
-                        ),
-                        onChanged: (String? value)
-                          // This is called when the user selects an item.
-                          async {
-                            dropdownValue2 = value!;
-                            await box3.put("lan", value);
-                          
-                        },
-                        items: list2.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 45,
-          ),
-          ExpansionTile(
-            title: Text(
-              'About',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            children: [Text(
-              'whattttttttttttttttttttttttttttttttttttsa',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-            )],
-          ),
-          SizedBox(
-            height: 45,
-          ),
-          Text(
-            'Log Out',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: () {
+          ListTile(
+            leading: CircleAvatar(child:Text(widget.ff.toUpperCase()[0],style: TextStyle(color: Colors.white),) ),
+            title: Text(widget.ff),
+            subtitle: GestureDetector(
+              onTap: () {
+                
               signOutUser();
-              Navigator.popUntil(context,  ModalRoute.withName('/'));
-            },
-            child: CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.black,
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-            ),
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => userEnterWith()));
+              },
+              
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [SizedBox(height: 4),Text("SIGN OUT"),],)),
+            trailing: IconButton(icon: Icon(Icons.settings,color: Colors.black,),onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage()));
+            },) ,
           ),
+          
+      
+          
+         
+        
+         
+          
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -354,7 +327,84 @@ class _HomeState extends State<Home> {
         ]);
   }
     void signOutUser() async {
-
+        var _user=GoogleSignIn().currentUser;
+  if(_user!=null){
+   await GoogleSignIn().signOut();
+  }
     await auth.signOut();
   }
+
+    void fireStoreVeriGuncelle()async{
+//  await firestore.collection('users').doc(auth.currentUser!.uid).update({"name":"turki"});
+// var _users=await firestore.collection('users').get();
+
+// for (var eleman in _users.docs)   {
+//   Map userMap=eleman.data();
+//   print(userMap["name"]);
+// //   if(userMap['e_mail']==e_mail){
+// // // await firestore.doc(eleman.id).update({"lan":"tr"});
+// //   }
+// }
+  print("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+
+var _myUser=auth.currentUser;
+if(_myUser!=null)
+  {print(auth.currentUser!.uid);
+     await firestore.doc("users/${auth.currentUser!.uid}").update({"lan":"tr"});
+  }
+
+  
+
+}
+    void fireStoreDelete()async{
+//  await firestore.collection('users').doc(auth.currentUser!.uid).update({"name":"turki"});
+// var _users=await firestore.collection('users').get();
+
+// for (var eleman in _users.docs)   {
+//   Map userMap=eleman.data();
+//   print(userMap["name"]);
+// //   if(userMap['e_mail']==e_mail){
+// // // await firestore.doc(eleman.id).update({"lan":"tr"});
+// //   }
+// }
+  print("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+
+var _myUser=auth.currentUser;
+if(_myUser!=null)
+  {print(auth.currentUser!.uid);
+     await firestore.doc("users/${auth.currentUser!.uid}").delete();
+     await _myUser.delete();
+  }
+
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => userEnterWith()));
+  
+
+}
+
+  Future<List<String>> fonn()async{
+  await locationData.getCurrentLocation();
+  if(locationData.latitude!=null && locationData.longitude!=null){
+      WeatherData WEATHER=WeatherData(lon: locationData.longitude,lat: locationData.latitude);
+      weatherData=WEATHER;
+      await WEATHER.getWeatherElements();
+      return [WEATHER.city,WEATHER.degree,WEATHER.state];
+    }
+    else{
+      // WeatherData NULLWEATHER=WeatherData();
+      return ["","",""];
+      
+    }
+
+
+  }
+}
+
+schimmerAnimationBox() {
+  return ListTile(
+    leading: Container(height: 40,width: 40,color:Colors.grey.shade300),
+    title :Container(height: 15,width: 40,color:Colors.grey.shade300),
+    subtitle: Container(height: 15,width: 40,color:Colors.grey.shade300),
+    trailing: Container(height: 35,width: 25,color:Colors.grey.shade300),
+
+  );
 }

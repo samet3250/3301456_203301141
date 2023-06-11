@@ -8,6 +8,7 @@ import 'package:my_news_app/pages/home_pages/home.dart';
 import 'package:my_news_app/pages/news_page.dart';
 import 'package:my_news_app/widget/searchnot_box.dart';
 import 'package:my_news_app/word_selectable_scrapping.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'newsbox.dart';
 List<String> titleList=[];
@@ -36,7 +37,11 @@ NewsBycategory(url:"https://www.cnbc.com/business/",ind:2),
 NewsBycategory(url:"https://www.cnbc.com/technology/",ind:3),
 NewsBycategory(url:"https://www.cnbc.com/travel/",ind:4),
 NewsBycategory(url:"https://www.cnbc.com/politics/",ind:5),
-NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:6), 
+NewsBycategory(url:"https://www.cnbc.com/health-and-science/",ind:6),
+NewsBycategory(url:"https://www.cnbc.com/sports/",ind:7),
+NewsBycategory(url:"https://www.cnbc.com/books/",ind:8),
+NewsBycategory(url:"https://www.cnbc.com/movies/",ind:9),
+
  //"https://newsapi.org/v2/top-headlines?language=en&sources=bbc-news&apiKey=90cb3f5228b24f1aabaded9050e8f0d6"
   
 ];
@@ -59,14 +64,26 @@ NewsBycategory(url:"https://www.cnbc.com/world-news/",ind:6),
   State<NewsBycategory> createState() => _NewsBycategoryState();
 }
 
-class _NewsBycategoryState extends State<NewsBycategory> {
+class _NewsBycategoryState extends State<NewsBycategory> with SingleTickerProviderStateMixin{
   //late Future <List<news>> apiListHolder;
-  
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
    // apiListHolder=createApiList(widget.url,widget.category);
+
+   
+    
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    
+    
   }
   @override
   Widget build(BuildContext context) {
@@ -251,7 +268,9 @@ class _NewsBycategoryState extends State<NewsBycategory> {
           }else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else
-               { return const CircularProgressIndicator();}
+               { 
+                
+                return const CircularProgressIndicator();}
             
           },
             ),
@@ -265,7 +284,26 @@ class _NewsBycategoryState extends State<NewsBycategory> {
           }else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else
-               { return const CircularProgressIndicator();}
+               { 
+                
+                return Shimmer.fromColors(child: SingleChildScrollView(
+                  child: Padding(
+        padding: const EdgeInsets.only(top: 8, left: 15, right: 15, bottom: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          schimmerAnimationBox(),
+          schimmerAnimationBox(),
+          schimmerAnimationBox(),
+            
+          ],
+        ),
+      ),
+                )
+                , baseColor: Colors.grey.shade300, highlightColor: Colors.grey.shade100,
+                ) ;
+               
+              }
           
           }
           
@@ -342,6 +380,41 @@ class _NewsBycategoryState extends State<NewsBycategory> {
   */
   }
   
+  Column schimmerAnimationBox() {
+     return Column(
+    
+     mainAxisAlignment: MainAxisAlignment.start,
+     crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+                    Container(
+              height: 180,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+              color:  Colors.grey.shade300,
+                 
+                  ),
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+          Container(height: 17,width:65,color:  Colors.grey.shade300),
+            const SizedBox(
+              height: 3,
+            ),
+          Container(height: 17,width: double.infinity,color:  Colors.grey.shade300),
+           
+            const SizedBox(
+              height: 3,
+            ),
+          Container(height: 17,width: double.infinity,color:  Colors.grey.shade300),
+                      const SizedBox(
+              height: 8,
+            ),
+      ],
+    );
+  }
+  
 }
 
 
@@ -357,3 +430,180 @@ class _NewsBycategoryState extends State<NewsBycategory> {
           writer: newsList[index].writer,
         );
       } */
+
+
+
+
+
+
+
+
+      /* 
+      
+      return ListView.builder(itemCount:10,itemBuilder:(context, index) {
+                 return Padding(
+        padding: const EdgeInsets.only(top: 8, left: 15, right: 15, bottom: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 180,
+              width: double.infinity,
+              color: Colors.grey.shade300,
+
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+Container(height: 17,width: double.infinity,color: Colors.grey.shade300,), 
+            const SizedBox(
+              height: 3,
+            ),
+            Container(height: 17,width: double.infinity,color: Colors.grey.shade300,),
+            const SizedBox(
+              height: 3,
+            ),
+/*             Text(
+              widget.subtitle,
+              style: const TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.visible,
+            ), */
+            // ignore: prefer_const_constructors
+           
+            
+          ],
+        ),
+      );
+               }, );
+      
+      */
+
+      /* 
+      
+      
+      SingleChildScrollView(
+                  
+                  
+                  child: Column(children: [
+                  Padding(
+        padding: const EdgeInsets.only(top: 8, left: 15, right: 15, bottom: 4),
+        
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 180,
+              width: double.infinity,
+              color: Colors.grey.shade300,
+
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+Container(height: 17,width: double.infinity,color:Colors.grey.shade300,), 
+            const SizedBox(
+              height: 3,
+            ),
+            Container(height: 17,width: double.infinity,color:Colors.grey.shade300,),
+            const SizedBox(
+              height: 3,
+            ),
+             Text(
+              widget.subtitle,
+              style: const TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.visible,
+            ), 
+            // ignore: prefer_const_constructors
+           
+            
+          ],
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 8, left: 15, right: 15, bottom: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 180,
+              width: double.infinity,
+              color: Colors.grey.shade300,
+
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+Container(height: 17,width: double.infinity,color: Colors.grey.shade300,), 
+            const SizedBox(
+              height: 3,
+            ),
+            Container(height: 17,width: double.infinity,color: Colors.grey.shade300,),
+            const SizedBox(
+              height: 3,
+            ),
+             Text(
+              widget.subtitle,
+              style: const TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.visible,
+            ), 
+            // ignore: prefer_const_constructors
+           
+            
+          ],
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 8, left: 15, right: 15, bottom: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 180,
+              width: double.infinity,
+              color: Colors.grey.shade300,
+
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+Container(height: 17,width: double.infinity,color: Colors.grey.shade300,), 
+            const SizedBox(
+              height: 3,
+            ),
+            Container(height: 17,width: double.infinity,color: Colors.grey.shade300,),
+            const SizedBox(
+              height: 3,
+            ),
+             Text(
+              widget.subtitle,
+              style: const TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.visible,
+            ), 
+            // ignore: prefer_const_constructors
+           
+            
+          ],
+        ),
+      )
+                ],),)
+       */

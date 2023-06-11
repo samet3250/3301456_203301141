@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_news_app/widget/create_news.dart';
 
 
-class HighlightsPage extends StatefulWidget {
-  HighlightsPage({super.key});
+class PoliticsPage extends StatefulWidget {
+  PoliticsPage({super.key});
 
   @override
-  State<HighlightsPage> createState() => _HighlightsPageState();
+  State<PoliticsPage> createState() => _PoliticsPageState();
 }
 
-class _HighlightsPageState extends State<HighlightsPage> {
+class _PoliticsPageState extends State<PoliticsPage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -24,13 +24,13 @@ class _HighlightsPageState extends State<HighlightsPage> {
             backgroundColor: Colors.red.shade400,
             elevation: 4,
             title: Text(
-              'HIGHLIGHTS',
+              'POLITICS',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[0]);
+        body: createNewsListView[5]);
   }
 }

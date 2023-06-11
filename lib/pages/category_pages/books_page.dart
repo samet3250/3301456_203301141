@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_news_app/pages/home_pages/home_tabbar_pages.dart';
 import 'package:my_news_app/widget/create_news.dart';
 
 
@@ -30,6 +31,6 @@ class _BooksPageState extends State<BooksPage> {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[10]);
+        body: createNewsListView[8]);
   }
 }

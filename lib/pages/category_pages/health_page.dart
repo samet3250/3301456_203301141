@@ -23,13 +23,13 @@ class _HealthPageState extends State<HealthPage> {
             backgroundColor: Colors.red.shade400,
             elevation: 4,
             title: Text(
-              'HEALTH AND FITNESS',
+              'HEALTH AND SCIENCE',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[9]);
+        body: createNewsListView[6]);
   }
 }

@@ -43,18 +43,7 @@ class _newsBoxState extends State<newsBox> {
     return GestureDetector(
 
       onDoubleTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => newsPage(
-                  imageUrl: widget.imageUrl,
-                  category: widget.category,
-                  urlsc: widget.urlscrap,
-                  //text: text,
-                  futureWidget:widget.futureWidget,
-                  time: widget.time,
-                  title: widget.title,
-                  writer: widget.writer,
-                  subtitle: widget.subtitle,
-                )));
+        Navigator.of(context).push(_createRoute());
       },
              onTap: () {cnt++;setState(() {
          
@@ -114,6 +103,39 @@ class _newsBoxState extends State<newsBox> {
      
     );
   }
+  Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>  newsPage(
+      imageUrl: widget.imageUrl,
+                  category: widget.category,
+                  urlsc: widget.urlscrap,
+                  //text: text,
+                  futureWidget:widget.futureWidget,
+                  time: widget.time,
+                  title: widget.title,
+                  writer: widget.writer,
+                  subtitle: widget.subtitle,
+    ),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return /* Align(
+  child: SizeTransition(
+    sizeFactor: animation,
+    child: child,
+    axisAlignment: 0.0,
+    axis: Axis.vertical,
+  )); */  SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      ); 
+    },
+  );
+}
 }
 /* 
 

@@ -1,9 +1,16 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_news_app/model/path_provider.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class RegisterPage extends StatefulWidget {
    RegisterPage({super.key});
-
+   CounterStorage storage=CounterStorage();
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
@@ -12,25 +19,29 @@ class _RegisterPageState extends State<RegisterPage> {
     String e_mail="", password_="";
     String passwordagain="",name="",surname="";
     
+    
   GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
 
   GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
 
   GlobalKey<FormState> formKey4 = GlobalKey<FormState>();
   late FirebaseAuth auth;
-
+  late FirebaseFirestore firestore;
   
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     auth=FirebaseAuth.instance;
-
+    firestore=FirebaseFirestore.instance;
+   
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -59,6 +70,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(
                     height: 10,
                   ), */
+                  first_name(context),
+                   SizedBox(height: 10),
+                   surname_(context),
+                  SizedBox(height: 10),
+
                   e_maill(context),
                   SizedBox(height: 10),
                  
@@ -81,7 +97,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: 10),
                     createButton(context)
                 ],
-              ))
+              )),
+          
           
           ]));
   }
@@ -102,7 +119,7 @@ Container createButton(BuildContext context) {
                   blurRadius: 6)
             ]),
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             bool validate = formKey2.currentState!.validate();
             bool validate2 = formKey3.currentState!.validate();
             bool validate3 = formKey4.currentState!.validate();
@@ -110,7 +127,11 @@ Container createButton(BuildContext context) {
             if (validate &&validate2&&validate3) {
               formKey2.currentState!.save();
               formKey3.currentState!.save();
+  
+              widget.storage.writeCounter(name+' '+surname);  
               createuserandemail();
+              // fireStoreVeriEKle();
+              // fireStoreVeriGuncelle();
               formKey2.currentState!.reset();
               formKey3.currentState!.reset();
               formKey4.currentState!.reset();
@@ -243,6 +264,7 @@ Container createButton(BuildContext context) {
         },
         onSaved: (newValue) {
           name = newValue!;
+          
         },
       ),
     );
@@ -281,6 +303,7 @@ Container createButton(BuildContext context) {
         },
         onSaved: (newValue) {
           surname = newValue!;
+          
         },
       ),
     );
@@ -326,7 +349,65 @@ Container createButton(BuildContext context) {
     );
   } 
     void createuserandemail()async{
-    var _userCredential=await auth.createUserWithEmailAndPassword(email: e_mail,password: password_);
-    print(_userCredential.toString());
-  } 
+    try {
+      var _userCredential = await auth.createUserWithEmailAndPassword(
+          email: e_mail, password: password_);
+      var _myUser = _userCredential.user;
+      if(_myUser!=null){
+              await firestore.collection('users').doc(auth.currentUser?.uid).set({
+  "user_id":auth.currentUser?.uid,
+  "user_name":name
+});
+      }
+      if (!_myUser!.emailVerified) {
+        await _myUser.sendEmailVerification();
+        
+      } else {
+        debugPrint('kullanicin maili onaylanmiş');
+      }
+
+      // debugPrint(_userCredential.toString());
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+  void fireStoreVeriGuncelle()async{
+//  await firestore.collection('users').doc(auth.currentUser!.uid).update({"name":"turki"});
+// var _users=await firestore.collection('users').get();
+
+// for (var eleman in _users.docs)   {
+//   Map userMap=eleman.data();
+//   print(userMap["name"]);
+// //   if(userMap['e_mail']==e_mail){
+// // // await firestore.doc(eleman.id).update({"lan":"tr"});
+// //   }
+// }
+  print("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+
+var _myUser=auth.currentUser;
+if(_myUser!=null)
+  {print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+    await firestore.doc(auth.currentUser!.uid).update({"lan":"tr"});
+  }
+  
+
 }
+        
+fireStoreVeriEKle()async{
+  Map<String,dynamic>_eklenecekUser={};
+  _eklenecekUser["name"]=name;
+  _eklenecekUser["surname"]=surname;
+  _eklenecekUser["e_mail"]=e_mail;
+  _eklenecekUser["id"]=
+  _eklenecekUser["createdAt"]=FieldValue.serverTimestamp();
+  
+await firestore.collection('users').doc(auth.currentUser?.uid).set({
+  "user_id":auth.currentUser?.uid,
+  "user_name":name
+});
+print("heyeeeeeeeeee");
+
+}
+
+}
+

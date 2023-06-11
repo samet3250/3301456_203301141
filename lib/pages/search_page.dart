@@ -2,22 +2,23 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:my_news_app/model/news_model.dart';
+import 'package:my_news_app/pages/category_pages/books_page.dart';
+import 'package:my_news_app/pages/category_pages/movies_page.dart';
 import 'package:my_news_app/widget/category_box.dart';
 import 'package:my_news_app/widget/create_news.dart';
 import 'package:my_news_app/widget/searchnot_box.dart';
 import 'package:my_news_app/model/categories_model.dart';
 
-import 'category_pages/books_page.dart';
+
 import 'category_pages/business_page.dart';
-import 'category_pages/cinema_page.dart';
-import 'category_pages/education_page.dart';
-import 'category_pages/entertainment_page.dart';
+
+
 import 'category_pages/health_page.dart';
-import 'category_pages/highlights_page.dart';
-import 'category_pages/lifestyle_page.dart';
-import 'category_pages/science_page.dart';
+import 'category_pages/poltcs_page.dart';
+import 'category_pages/travel_page.dart';
+import 'category_pages/techn_page.dart';
 import 'category_pages/sports_page.dart';
-import 'category_pages/turkey_page.dart';
+import 'category_pages/local_page.dart';
 import 'category_pages/world_page.dart';
 class SearchPage extends StatefulWidget {
    SearchPage({super.key});
@@ -244,54 +245,47 @@ SliverGrid ifSearchEmptySliver(BuildContext context) {
               switch (index) {
                 case 0:
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HighlightsPage() ));
+                      builder: (context) => WorldPage() ));
                   break;
                 case 1:
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => TurkeyPage()));
+                      MaterialPageRoute(builder: (context) => LocalPage()));
                   break;
                 case 2:
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => WorldPage()));
+                      MaterialPageRoute(builder: (context) => BusinessPage()));
                   break;
                 case 3:
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => BusinessPage()));
+                      MaterialPageRoute(builder: (context) => TechnologyPage()));
                   break;
                 case 4:
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SportsPage()));
+                      MaterialPageRoute(builder: (context) => TravelPage()));
                   break;
                 case 5:
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SciencePage()));
+                      MaterialPageRoute(builder: (context) => PoliticsPage()));
                   break;
-                case 6:
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => EducationPage()));
-                  break;
-                case 7:
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => EntertainmentPage()));
-                  break;
-                case 8:
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LifestylePage()));
-                  break;
-                case 9:
+                                  case 6:
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => HealthPage()));
                   break;
-                case 10:
+                                  case 7:
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SportsPage()));
+                  break;
+                                  case 8:
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => BooksPage()));
                   break;
-                case 11:
+                                  case 9:
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => CinemaPage()));
+                      MaterialPageRoute(builder: (context) => MoviesPage()));
                   break;
+            
 
-                default:
+                
               }
             },
             child: categoryBox(
@@ -304,7 +298,7 @@ List indexlist = [];
 void searchlist_add(String text) {
   indexlist.clear();
   indexxList.clear();
-  
+  titleList=titleList.toSet().toList();//////////////////////////////////////
   
     for(int a=0;a<titleList.length;a++){
       var subtitle= titleList[a].toLowerCase();

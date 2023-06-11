@@ -54,8 +54,9 @@ class _newsPageState extends State<newsPage> {
                 height: MediaQuery.of(context).size.height / 3,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(widget.imageUrl), fit: BoxFit.fitWidth)),
+                        image: NetworkImage(widget.imageUrl), fit: BoxFit.cover)),
               ),
+              
               Positioned(
                 top: 23,
                 left: 0,
@@ -73,14 +74,14 @@ class _newsPageState extends State<newsPage> {
           bottom: 0,
           right: 0,
           left: 0,
-          top:MediaQuery.of(context).size.height / 3 ,
+          top:(MediaQuery.of(context).size.height )/3 ,
 
             child: ListView(
               children: [
                 Padding(
-                    padding: EdgeInsets.only(left: 10,top: 8),
+                    padding: EdgeInsets.only(left: 10,),
                     child: Text(
-                      'From ${widget.writer}  ${widget.time}',
+                      '${widget.time}',
                       style: TextStyle(fontFamily: 'Times'),
                     )),
                 Padding(
@@ -110,7 +111,7 @@ class _newsPageState extends State<newsPage> {
         ),
         Positioned(
             right: 16,
-            top: (MediaQuery.of(context).size.height - 60) / 3,
+            top: (MediaQuery.of(context).size.height - 90) / 3,
             child: Container(
               height: 50,
               width: 50,
@@ -130,7 +131,7 @@ class _newsPageState extends State<newsPage> {
             )),
         Positioned(
             right: 74,
-            top: (MediaQuery.of(context).size.height - 60) / 3,
+            top: (MediaQuery.of(context).size.height - 90) / 3,
             child: Container(
               height: 50,
               width: 50,

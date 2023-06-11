@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_news_app/widget/create_news.dart';
 
 
-class SciencePage extends StatefulWidget {
-  SciencePage({super.key});
+class TechnologyPage extends StatefulWidget {
+  TechnologyPage({super.key});
 
   @override
-  State<SciencePage> createState() => _SciencePageState();
+  State<TechnologyPage> createState() => _TechnologyPageState();
 }
 
-class _SciencePageState extends State<SciencePage> {
+class _TechnologyPageState extends State<TechnologyPage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -23,13 +23,13 @@ class _SciencePageState extends State<SciencePage> {
             backgroundColor: Colors.red.shade400,
             elevation: 4,
             title: Text(
-              'SCIENCE',
+              'TECHNOLOGY',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             )),
-        body: createNewsListView[5]);
+        body: createNewsListView[3]);
   }
 }
