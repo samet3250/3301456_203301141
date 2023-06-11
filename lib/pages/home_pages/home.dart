@@ -147,7 +147,9 @@ switch (box4.get("color").toString()) {
   case "teal": return Colors.teal;
     
     
-  default: return Colors.red.shade400;
+  default: 
+  
+  return Colors.red.shade400;
 }
   }
 

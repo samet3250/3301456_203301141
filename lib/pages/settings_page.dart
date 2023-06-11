@@ -162,7 +162,7 @@ class _SettingsPageState extends State<SettingsPage> {
     ListTile(
                 leading: Icon(Icons.format_paint),
                 title: Text('Color'),
-                subtitle: Text(box4.get("col").toString().replaceFirst(box4.get("col").toString()[0],box4.get("col").toString()[0].toUpperCase())),
+                subtitle: Text(box4.get("color").toString().replaceFirst(box4.get("color").toString()[0],box4.get("color").toString()[0].toUpperCase())),
                 trailing: DropdownButton<String>(
                           //value: dropdownValue,
                           // hint: Text("choose"),
