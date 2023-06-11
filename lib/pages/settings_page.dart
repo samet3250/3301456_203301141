@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_news_app/pages/home_pages/home.dart';
 import 'package:my_news_app/pages/login_pages/user_enterwith.dart';
-import 'package:settings_ui/settings_ui.dart';
+
 
 var box2=Hive.box("category");
 var box3=Hive.box("language");
@@ -87,19 +87,19 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
             )),
-      body: SettingsList(
-        sections: [
-          SettingsSection(
-            title: Text('Common'),
-            tiles: <SettingsTile>[
-              SettingsTile.navigation(
+      body:    Column(
+        children: [
+          
+             Text('Common'),
+              SizedBox(height: 15,),
+              ListTile(
                 leading: Icon(Icons.language),
                 title: Text('Language'),
-                value: Text(languages()),
+                subtitle: Text(languages()),
                 trailing: DropdownButton<String>(
                           //value: dropdownValue,
                           // hint: Text("translate to:"),
-                          icon: const Icon(Icons.more_vert),
+                          icon: const Icon(Icons.more_vert,color: Colors.black,),
     
                           elevation: 16,
                           style: const TextStyle(color: Colors.deepPurple),
@@ -126,14 +126,15 @@ class _SettingsPageState extends State<SettingsPage> {
                           }).toList(),
                         ),
               ),
-              SettingsTile.navigation(
+              ListTile(
                 leading: Icon(Icons.location_on_outlined),
                 title: Text('Location'),
-                value: Text(box2.get("cat").toString().replaceFirst(box2.get("cat").toString()[0], box2.get("cat").toString()[0].toUpperCase())),
+                subtitle: Text(box2.get("cat").toString().replaceFirst(box2.get("cat").toString()[0], box2.get("cat").toString()[0].toUpperCase())),
                 trailing: DropdownButton<String>(
                           //value: dropdownValue,
                           // hint: Text("choose"),
                           icon: const Icon(Icons.more_vert),
+                          
                           elevation: 16,
                           style: const TextStyle(color: Colors.deepPurple),
                           underline: Container(
@@ -158,10 +159,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           }).toList(),
                         ),
               ),
-    SettingsTile.navigation(
+    ListTile(
                 leading: Icon(Icons.format_paint),
                 title: Text('Color'),
-                value: Text(box4.get("color").toString().replaceFirst(box4.get("color").toString()[0],box4.get("color").toString()[0].toUpperCase())),
+                subtitle: Text(box4.get("col").toString().replaceFirst(box4.get("col").toString()[0],box4.get("col").toString()[0].toUpperCase())),
                 trailing: DropdownButton<String>(
                           //value: dropdownValue,
                           // hint: Text("choose"),
@@ -191,15 +192,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
               ),
               
-            ],
-          ),
-                  SettingsSection(
-          title: Text('Account'),
-          tiles: <SettingsTile>[
-            SettingsTile.navigation(
+            
+          
+            Text("Account"),
+            SizedBox(height: 15,)  ,    
+            ListTile(
               leading: Icon(Icons.person),
               title: Text('Delete Account'),
-              value: Text(auth.currentUser!.email.toString()),
+              subtitle: Text(auth.currentUser!.email.toString()),
               trailing: GestureDetector(
                 onTap: () {
                   
@@ -211,8 +211,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
 
-          ],
-        ),
+          
+        
         ],
       ),
     );

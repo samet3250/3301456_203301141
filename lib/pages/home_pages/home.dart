@@ -39,7 +39,10 @@ class _HomeState extends State<Home> {
   late FirebaseFirestore firestore;
   var locationData=LocationHelper();
   WeatherData weatherData=WeatherData();
+   setFirstColor()async{
+      await box4.put("color", "red");
 
+  }
 
   @override
   void initState() {
@@ -67,6 +70,7 @@ class _HomeState extends State<Home> {
 
     }); */
       widget.ff =gecici;
+      setFirstColor();
       
     });});
    firestore=FirebaseFirestore.instance;
@@ -220,7 +224,7 @@ switch (box4.get("color").toString()) {
                 }
               }
               else if(snapshot.hasError){
-                return Text(snapshot.error.toString());
+                return SizedBox(height: 0,);//Text("Bu bir hava durumu uygulamasi geolocator paketini kullaniyor ,emulatörde çalişiyor ancak webde çalişmiyor");
 
               }
               else{

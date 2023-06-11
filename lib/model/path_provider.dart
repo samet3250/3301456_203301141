@@ -24,7 +24,7 @@ class CounterStorage {
       return contents;
     } catch (e) {
       // If encountering an error, return 0
-      return "hata";
+      return "User";
     }
   }
 
