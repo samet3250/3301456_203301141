@@ -146,7 +146,7 @@ class FirebaseFirestoreFonk {
         behavior: SnackBarBehavior.floating,
         content: AwesomeSnackbarContent(
           title: 'Warning!',
-          message: "E-mail already in use , Try  with another one",
+          message: "E-mail already in use , Try  with another one!",
           contentType: ContentType.failure,
         ),
       );
