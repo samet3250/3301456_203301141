@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_news_app/provider/path_provider.dart';
 import 'package:my_news_app/pages/home_pages/home.dart';
@@ -137,26 +138,28 @@ class FirebaseFirestoreFonk {
       //   debugPrint('kullanicin maili onaylanmis');
       // }
       Navigator.of(context).pop();
-    } catch (e) {
-      SnackBar snackBar = SnackBar(
-        dismissDirection: DismissDirection.none,
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        behavior: SnackBarBehavior.floating,
-        content: AwesomeSnackbarContent(
-          title: 'Warning!',
-          message: "E-mail already in use , Try  with another oneeeeeee",
-          contentType: ContentType.failure,
-        ),
-      );
+    }  on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        
+          SnackBar snackBar = SnackBar(
+            dismissDirection: DismissDirection.none,
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            behavior: SnackBarBehavior.floating,
+            content: AwesomeSnackbarContent(
+              title: 'Warning!',
+              message: "E-mail already in use , Try  with another one",
+              contentType: ContentType.failure,
+            ),
+          );
 
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }finally{
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        
+      }
+    } finally {
       storage.write(name);
     }
-      
-
   }
 // ------------------------------------------------------------------------------------------------------------
 
