@@ -137,28 +137,25 @@ class FirebaseFirestoreFonk {
       // } else {
       //   debugPrint('kullanicin maili onaylanmis');
       // }
-      Navigator.of(context).pop();
-    }  on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        
-          SnackBar snackBar = SnackBar(
-            dismissDirection: DismissDirection.none,
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            behavior: SnackBarBehavior.floating,
-            content: AwesomeSnackbarContent(
-              title: 'Warning!',
-              message: "E-mail already in use , Try  with another one",
-              contentType: ContentType.failure,
-            ),
-          );
-
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        
-      }
-    } finally {
       storage.write(name);
+      Navigator.of(context).pop();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        SnackBar snackBar = SnackBar(
+          dismissDirection: DismissDirection.none,
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          content: AwesomeSnackbarContent(
+            title: 'Warning!',
+            message: "E-mail already in use , Try  with another one",
+            contentType: ContentType.failure,
+          ),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
   }
 // ------------------------------------------------------------------------------------------------------------
