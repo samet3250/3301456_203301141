@@ -136,7 +136,6 @@ class FirebaseFirestoreFonk {
       // } else {
       //   debugPrint('kullanicin maili onaylanmis');
       // }
-      storage.write(name);
       Navigator.of(context).pop();
     } catch (e) {
       SnackBar snackBar = SnackBar(
@@ -154,6 +153,8 @@ class FirebaseFirestoreFonk {
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+      storage.write(name);
+
   }
 // ------------------------------------------------------------------------------------------------------------
 
