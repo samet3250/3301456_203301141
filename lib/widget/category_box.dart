@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class categoryBox extends StatelessWidget {
-  late String category, imageUrl;
-  categoryBox({required this.imageUrl, required this.category, super.key});
+  final category;
+  final imageUrl;
+  categoryBox({ this.imageUrl,  this.category, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +11,8 @@ class categoryBox extends StatelessWidget {
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-              image:AssetImage(imageUrl), fit: BoxFit.cover)),
+          image:
+              DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.cover)),
       child: Container(
         alignment: Alignment.center,
         child: Text(
@@ -21,7 +22,6 @@ class categoryBox extends StatelessWidget {
               fontSize: 23,
               color: Colors.white,
               fontWeight: FontWeight.w600),
-          
         ),
       ),
     );

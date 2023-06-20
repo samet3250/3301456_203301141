@@ -1,53 +1,50 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:my_news_app/model/path_provider.dart';
-import 'package:path_provider/path_provider.dart';
-
+import 'package:my_news_app/firebase_firestore/firebase_firestore_func.dart';
+import 'package:my_news_app/provider/path_provider.dart';
 
 class RegisterPage extends StatefulWidget {
-   RegisterPage({super.key});
-   CounterStorage storage=CounterStorage();
+  RegisterPage({super.key});
+  PathProviderStorage storage = PathProviderStorage();
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-    String e_mail="", password_="";
-    String passwordagain="",name="",surname="";
-    
-    
+  String e_mail = "",
+      password_ = "",
+      passwordagain = "",
+      name = "",
+      surname = "";
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
-
   GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
-
-  GlobalKey<FormState> formKey4 = GlobalKey<FormState>();
   late FirebaseAuth auth;
   late FirebaseFirestore firestore;
-  
+  late bool _passwordVisible;
+  late bool _passwordVisible2;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    auth=FirebaseAuth.instance;
-    firestore=FirebaseFirestore.instance;
-   
-    
+    auth = FirebaseAuth.instance;
+    firestore = FirebaseFirestore.instance;
+    _passwordVisible = false;
+    _passwordVisible2 = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Column(children: [
           Align(
             alignment: Alignment.topCenter,
             child: Container(
@@ -58,52 +55,34 @@ class _RegisterPageState extends State<RegisterPage> {
                       image: AssetImage('assets/news.png'), fit: BoxFit.cover)),
             ),
           ),
-          
-                    Form(
-              key: formKey2,
+          Form(
+              key: formKey,
               //autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
-/*                   first_name(context),
+                  firstName(context),
                   SizedBox(height: 10),
-                  surname_(context),
-                  SizedBox(
-                    height: 10,
-                  ), */
-                  first_name(context),
-                   SizedBox(height: 10),
-                   surname_(context),
+                  Surname(context),
                   SizedBox(height: 10),
-
-                  e_maill(context),
+                  GetEmail(context),
                   SizedBox(height: 10),
-                 
-
-
-                  
-   
                 ],
-                
               )),
-              Form(
-                key: formKey3,
-                child:Parola(context)),
-              Form(
-                key: formKey4,
-                child: Column(
+          Form(key: formKey2, child: Parola(context)),
+          Form(
+              key: formKey3,
+              child: Column(
                 children: [
-                    SizedBox(height: 10),
-                    Parola_control(context),
-                    SizedBox(height: 10),
-                    createButton(context)
+                  SizedBox(height: 10),
+                  ParolaControl(context),
+                  SizedBox(height: 10),
                 ],
               )),
-          
-          
-          ]));
+          Button(context)
+        ]));
   }
 
-Container createButton(BuildContext context) {
+  Container Button(BuildContext context) {
     return Container(
         margin: EdgeInsets.fromLTRB(45, 0, 45, 0),
         height: 46,
@@ -120,23 +99,20 @@ Container createButton(BuildContext context) {
             ]),
         child: ElevatedButton(
           onPressed: () async {
-            bool validate = formKey2.currentState!.validate();
-            bool validate2 = formKey3.currentState!.validate();
-            bool validate3 = formKey4.currentState!.validate();
+            bool validate = formKey.currentState!.validate();
+            bool validate2 = formKey2.currentState!.validate();
+            bool validate3 = formKey3.currentState!.validate();
 
-            if (validate &&validate2&&validate3) {
+            if (validate && validate2 && validate3) {
+              formKey.currentState!.save();
               formKey2.currentState!.save();
-              formKey3.currentState!.save();
-  
-              widget.storage.writeCounter(name+' '+surname);  
-              createuserandemail();
-              // fireStoreVeriEKle();
-              // fireStoreVeriGuncelle();
+
+              FirebaseFirestoreFonk.FirebaseCreateuserandemail(
+                  e_mail, password_, name + " " + surname, context);
+
+              formKey.currentState!.reset();
               formKey2.currentState!.reset();
               formKey3.currentState!.reset();
-              formKey4.currentState!.reset();
-              Navigator.of(context)
-                  .pop();
             }
           },
           child: Text('Create My Account',
@@ -164,33 +140,42 @@ Container createButton(BuildContext context) {
                 blurRadius: 6)
           ]),
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.text,
+        obscureText: !_passwordVisible,
         decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
-            errorStyle: TextStyle(color: Colors.red),
-            hintText: 'Password'),
+          border: OutlineInputBorder(),
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
+          errorStyle: TextStyle(color: Colors.red),
+          hintText: 'Password',
+          suffixIcon: IconButton(
+            icon: Icon(
+              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              color: Theme.of(context).primaryColorDark,
+            ),
+            onPressed: () {
+              setState(() {
+                _passwordVisible = !_passwordVisible;
+              });
+            },
+          ),
+        ),
         validator: (value) {
           if (value!.length < 5) {
             return 'Password must be at least 5 character';
           } else {
-          password_ = value;
-
             return null;
           }
         },
-
         onSaved: (newValue) {
           password_ = newValue!;
-          
         },
       ),
     );
   }
 
-  Container Parola_control(BuildContext context) {
+  Container ParolaControl(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(45, 0, 45, 0),
       height: 46,
@@ -206,19 +191,32 @@ Container createButton(BuildContext context) {
                 blurRadius: 6)
           ]),
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.text,
+        obscureText: !_passwordVisible2,
         decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
-            errorStyle: TextStyle(color: Colors.red),
-            hintText: 'Password again'),
+          border: OutlineInputBorder(),
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
+          errorStyle: TextStyle(color: Colors.red),
+          hintText: 'Password again',
+          suffixIcon: IconButton(
+            icon: Icon(
+              _passwordVisible2 ? Icons.visibility : Icons.visibility_off,
+              color: Theme.of(context).primaryColorDark,
+            ),
+            onPressed: () {
+              setState(() {
+                _passwordVisible2 = !_passwordVisible2;
+              });
+            },
+          ),
+        ),
         validator: (value) {
-          if(formKey3.currentState!.validate()){
-            formKey3.currentState!.save();
+          if (formKey2.currentState!.validate()) {
+            formKey2.currentState!.save();
           }
-          if (value!= password_) {
+          if (value != password_) {
             return 'Passwords are not same';
           } else {
             return null;
@@ -231,7 +229,7 @@ Container createButton(BuildContext context) {
     );
   }
 
-   Container first_name(BuildContext context) {
+  Container firstName(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(45, 0, 45, 0),
       height: 46,
@@ -264,13 +262,12 @@ Container createButton(BuildContext context) {
         },
         onSaved: (newValue) {
           name = newValue!;
-          
         },
       ),
     );
   }
 
-  Container surname_(BuildContext context) {
+  Container Surname(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(45, 0, 45, 0),
       height: 46,
@@ -303,13 +300,12 @@ Container createButton(BuildContext context) {
         },
         onSaved: (newValue) {
           surname = newValue!;
-          
         },
       ),
     );
   }
 
-  Container e_maill(BuildContext context) {
+  Container GetEmail(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(45, 0, 45, 0),
       height: 46,
@@ -347,67 +343,5 @@ Container createButton(BuildContext context) {
         },
       ),
     );
-  } 
-    void createuserandemail()async{
-    try {
-      var _userCredential = await auth.createUserWithEmailAndPassword(
-          email: e_mail, password: password_);
-      var _myUser = _userCredential.user;
-      if(_myUser!=null){
-              await firestore.collection('users').doc(auth.currentUser?.uid).set({
-  "user_id":auth.currentUser?.uid,
-  "user_name":name
-});
-      }
-      if (!_myUser!.emailVerified) {
-        await _myUser.sendEmailVerification();
-        
-      } else {
-        debugPrint('kullanicin maili onaylanmiş');
-      }
-
-      // debugPrint(_userCredential.toString());
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
-  void fireStoreVeriGuncelle()async{
-//  await firestore.collection('users').doc(auth.currentUser!.uid).update({"name":"turki"});
-// var _users=await firestore.collection('users').get();
-
-// for (var eleman in _users.docs)   {
-//   Map userMap=eleman.data();
-//   print(userMap["name"]);
-// //   if(userMap['e_mail']==e_mail){
-// // // await firestore.doc(eleman.id).update({"lan":"tr"});
-// //   }
-// }
-  print("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-
-var _myUser=auth.currentUser;
-if(_myUser!=null)
-  {print("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-    await firestore.doc(auth.currentUser!.uid).update({"lan":"tr"});
-  }
-  
-
 }
-        
-fireStoreVeriEKle()async{
-  Map<String,dynamic>_eklenecekUser={};
-  _eklenecekUser["name"]=name;
-  _eklenecekUser["surname"]=surname;
-  _eklenecekUser["e_mail"]=e_mail;
-  _eklenecekUser["id"]=
-  _eklenecekUser["createdAt"]=FieldValue.serverTimestamp();
-  
-await firestore.collection('users').doc(auth.currentUser?.uid).set({
-  "user_id":auth.currentUser?.uid,
-  "user_name":name
-});
-print("heyeeeeeeeeee");
-
-}
-
-}
-

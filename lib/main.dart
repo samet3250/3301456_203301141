@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_news_app/firebase_options.dart';
-import 'package:my_news_app/pages/home_pages/home.dart';
 import 'package:my_news_app/pages/login_pages/user_enterwith.dart';
 import 'model/news_model.dart';
 
@@ -31,26 +30,42 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late FirebaseAuth auth;
+  var box2 = Hive.box("category");
+  var box3 = Hive.box("language");
+  var box4 = Hive.box("color");
+
+  setFirstHiveItems() async {
+    if (box4.get("color") == null) {
+      await box4.put("color", "red");
+    }
+    if (box3.get("lan") == null) {
+      await box3.put("lan", "tr");
+    }
+    if (box2.get("cat") == null) {
+      await box3.put("cat", "turkey");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     auth = FirebaseAuth.instance;
+    setFirstHiveItems();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false, 
-        home: AreYouSignIn());
+        debugShowCheckedModeBanner: false, home: userEnterWith());
   }
 
-  Widget AreYouSignIn() {
-    var user = auth.currentUser;
+  // Widget AreYouSignIn() {
+  //   var user = auth.currentUser;
 
-    if (user == null) {
-      return userEnterWith();
-    } else {
-      return Home();
-    }
-  }
+  //   if (user == null) {
+  //     return userEnterWith();
+  //   } else {
+  //     return Home();
+  //   }
+  // }
 }

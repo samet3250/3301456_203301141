@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:my_news_app/model/news_model.dart';
-import 'package:my_news_app/news_api.dart';
-import 'package:my_news_app/pages/home_pages/home.dart';
-import 'package:my_news_app/widget/newsbox.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:translator/translator.dart';
 import 'package:word_selectable_text/word_selectable_text.dart';
 
 class FutureWordSelectableText extends StatefulWidget {
-  late String metin;
-  FutureWordSelectableText({super.key ,required this.metin});
+  late String content;
+  FutureWordSelectableText({super.key ,required this.content});
 
   @override
   State<FutureWordSelectableText> createState() => _FutureWordSelectableTextState();
+   
 }
-
+ 
 class _FutureWordSelectableTextState extends State<FutureWordSelectableText> {
-  late GoogleTranslator translator = GoogleTranslator();
+  GoogleTranslator translator = GoogleTranslator();
+   var box2 = Hive.box("category");
+   var box3 = Hive.box("language");
   
   @override
   Widget build(BuildContext context) {
     return WordSelectableText(
                     selectable: true,
                     highlight: true,
-                    text: widget.metin,
+                    text: widget.content,
                     style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
                     onWordTapped: (word, index) {
                       translator

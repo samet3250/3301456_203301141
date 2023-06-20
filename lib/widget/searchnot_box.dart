@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_news_app/content.dart';
+import 'package:my_news_app/provider/web_scraping.dart';
 import 'package:my_news_app/pages/news_page.dart';
-import 'package:my_news_app/word_selectable_scrapping.dart';
+import 'package:my_news_app/widget/word_selectable_text_widget.dart';
+
 
 class SearchNotEmptyBox extends StatelessWidget {
   late String imageUrl;
@@ -10,7 +11,7 @@ class SearchNotEmptyBox extends StatelessWidget {
   late String time;
   late String writer;
   late String category;
-  String urlll;
+  late String url;
   SearchNotEmptyBox({
     super.key,
     required this.imageUrl,
@@ -19,7 +20,7 @@ class SearchNotEmptyBox extends StatelessWidget {
     required this.time,
     required this.writer,
     required this.category,
-   this.urlll ="",
+    required this.url ,
   });
 
   @override
@@ -31,17 +32,13 @@ class SearchNotEmptyBox extends StatelessWidget {
             builder: (context) => newsPage(
                   imageUrl: imageUrl,
                   category: category,
-                  urlsc: urlll,
+                  url: url,
                   futureWidget: FutureBuilder(
-          future:getcc(urlll),//"https://www.bbc.com/news/world-latin-america-65381624"
-          builder: (context, snapshot) {
-            
-            
-            //print((urlkey.currentState!.urlp)==null?"null":"null degil");
-            print("newspage yukleniyor");
+          future:getTextandSubtitle(url),
+          builder: (context, snapshot) {        
         if(snapshot.hasData){
-          var metin= snapshot.data!;
-          return FutureWordSelectableText(metin: metin[0]);
+          List<String> Newscontent= snapshot.data!;
+          return FutureWordSelectableText(content: Newscontent[0]);
         }else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else

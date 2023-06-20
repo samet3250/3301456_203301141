@@ -1,18 +1,10 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:my_news_app/model/news_model.dart';
 import 'package:my_news_app/pages/category_pages/books_page.dart';
 import 'package:my_news_app/pages/category_pages/movies_page.dart';
 import 'package:my_news_app/widget/category_box.dart';
 import 'package:my_news_app/widget/create_news.dart';
-import 'package:my_news_app/widget/searchnot_box.dart';
 import 'package:my_news_app/model/categories_model.dart';
-
-
 import 'category_pages/business_page.dart';
-
-
 import 'category_pages/health_page.dart';
 import 'category_pages/poltcs_page.dart';
 import 'category_pages/travel_page.dart';
@@ -20,10 +12,12 @@ import 'category_pages/techn_page.dart';
 import 'category_pages/sports_page.dart';
 import 'category_pages/local_page.dart';
 import 'category_pages/world_page.dart';
+
+List indexlist = [];
+
 class SearchPage extends StatefulWidget {
-   SearchPage({super.key});
-  
-  
+  SearchPage({super.key});
+
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
@@ -31,19 +25,11 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   late TextEditingController searchController;
 
-  
-  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     searchController = TextEditingController();
-    print("titlelist: ${titleList}");
-    print("titlelist111uzunluk: ${titleList.length}");
-
-    print("uzunluk: ${uzunluk}");
-    print("indexxlist: ${indexxList}");
-    
   }
 
   @override
@@ -78,10 +64,7 @@ class _SearchPageState extends State<SearchPage> {
                   Expanded(
                     child: TextFormField(
                       onFieldSubmitted: (value) {
-                        setState(() {
-                      
-                       
-                        });
+                        setState(() {});
                       },
                       controller: searchController,
                       decoration: InputDecoration(
@@ -105,14 +88,15 @@ class _SearchPageState extends State<SearchPage> {
         ),
         searchController.text.isEmpty
             ? SliverToBoxAdapter(child: ifSearchEmptyText())
-            : SliverToBoxAdapter(child: ifSearchNotEmptyText(searchController.text)),
+            : SliverToBoxAdapter(
+                child: ifSearchNotEmptyText(searchController.text)),
         searchController.text.isEmpty
             ? ifSearchEmptySliver(context)
             : ifSearchNotEmptySliver(searchController.text)
       ]),
     );
   }
-  
+
   IconButton searchIcons() {
     if (searchController.text.isNotEmpty) {
       return IconButton(
@@ -129,20 +113,17 @@ class _SearchPageState extends State<SearchPage> {
       return IconButton(
           onPressed: () {
             setState(() {
-             FocusScope.of(context).unfocus();
-
+              FocusScope.of(context).unfocus();
             });
           },
           icon: Image.asset(
             'assets/icons/search.png',
             color: Colors.black,
           ));
-    };
+    }
+    ;
   }
-
-
 }
-
 
 Widget ifSearchNotEmptyText(String text) {
   searchlist_add(text);
@@ -232,8 +213,8 @@ Widget ifSearchEmptyText() {
 }
 
 SliverList ifSearchNotEmptySliver(String text) => SliverList(
-        delegate: SliverChildListDelegate(List.generate(indexlist.length, (index) => searchList[indexlist[index]]))
-        );
+    delegate: SliverChildListDelegate(List.generate(
+        indexlist.length, (index) => searchList[indexlist[index]])));
 
 SliverGrid ifSearchEmptySliver(BuildContext context) {
   return SliverGrid.count(
@@ -244,8 +225,8 @@ SliverGrid ifSearchEmptySliver(BuildContext context) {
             onTap: () {
               switch (index) {
                 case 0:
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => WorldPage() ));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => WorldPage()));
                   break;
                 case 1:
                   Navigator.of(context).push(
@@ -256,8 +237,8 @@ SliverGrid ifSearchEmptySliver(BuildContext context) {
                       MaterialPageRoute(builder: (context) => BusinessPage()));
                   break;
                 case 3:
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => TechnologyPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TechnologyPage()));
                   break;
                 case 4:
                   Navigator.of(context).push(
@@ -267,25 +248,22 @@ SliverGrid ifSearchEmptySliver(BuildContext context) {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => PoliticsPage()));
                   break;
-                                  case 6:
+                case 6:
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => HealthPage()));
                   break;
-                                  case 7:
+                case 7:
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => SportsPage()));
                   break;
-                                  case 8:
+                case 8:
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => BooksPage()));
                   break;
-                                  case 9:
+                case 9:
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => MoviesPage()));
                   break;
-            
-
-                
               }
             },
             child: categoryBox(
@@ -294,22 +272,16 @@ SliverGrid ifSearchEmptySliver(BuildContext context) {
       }));
 }
 
-List indexlist = [];
 void searchlist_add(String text) {
   indexlist.clear();
-  indexxList.clear();
-  titleList=titleList.toSet().toList();//////////////////////////////////////
-  
-    for(int a=0;a<titleList.length;a++){
-      var subtitle= titleList[a].toLowerCase();
-      var search_text =text.toLowerCase();
-      if(subtitle.contains(search_text)){
-        indexlist.add(a);
-        indexxList.add(a);
-        
 
-      }
+  titleList = titleList.toSet().toList();
+
+  for (int a = 0; a < titleList.length; a++) {
+    var subtitle = titleList[a].toLowerCase();
+    var search_text = text.toLowerCase();
+    if (subtitle.contains(search_text)) {
+      indexlist.add(a);
     }
-
-  
+  }
 }

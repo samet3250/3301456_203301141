@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_news_app/content.dart';
 import 'package:my_news_app/model/categories_model.dart';
 import 'package:my_news_app/widget/create_news.dart';
-
 
 class HomeTabbarPages extends StatefulWidget {
   const HomeTabbarPages({super.key});
@@ -14,14 +12,12 @@ class HomeTabbarPages extends StatefulWidget {
 class _HomeTabbarPagesState extends State<HomeTabbarPages>
     with SingleTickerProviderStateMixin {
   late TabController tabBarController;
-  
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabBarController = TabController(length: categories.length, vsync: this);
-
   }
 
   @override
@@ -35,7 +31,7 @@ class _HomeTabbarPagesState extends State<HomeTabbarPages>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight:7,
+        toolbarHeight: 7,
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottom: PreferredSize(
@@ -63,5 +59,9 @@ class _HomeTabbarPagesState extends State<HomeTabbarPages>
           controller: tabBarController, children: createNewsListView),
     );
   }
-}
 
+  List<Widget> categories_name() {
+    return List.generate(
+        categories.length, (index) => Text(categories[index].name));
+  }
+}

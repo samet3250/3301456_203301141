@@ -2,23 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_news_app/firebase_firestore/firebase_firestore_func.dart';
-import 'package:my_news_app/pages/login_pages/forget_password.dart';
-import 'package:my_news_app/pages/login_pages/register_page.dart';
+import 'package:my_news_app/pages/home_pages/home.dart';
 
-class userEnter extends StatefulWidget {
-  userEnter({super.key});
+
+class ReauthenticateAndDelete extends StatefulWidget {
+  ReauthenticateAndDelete({super.key});
 
   @override
-  State<userEnter> createState() => _userEnterState();
+  State<ReauthenticateAndDelete> createState() =>
+      _ReauthenticateAndDeleteState();
 }
 
-class _userEnterState extends State<userEnter> {
-  late String email, password;
+class _ReauthenticateAndDeleteState extends State<ReauthenticateAndDelete> {
+  late String password;
+  
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late FirebaseAuth auth;
   late FirebaseFirestore firestore;
-  bool _passwordVisible = false;
+  late bool _passwordVisible;
 
   @override
   void initState() {
@@ -26,12 +28,12 @@ class _userEnterState extends State<userEnter> {
     super.initState();
     auth = FirebaseAuth.instance;
     firestore = FirebaseFirestore.instance;
-
+    _passwordVisible=false;
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
         debugPrint('User oturumu kapali');
       } else {
-        debugPrint('User oturum açik ${user.email} ');
+        debugPrint('User oturum acik ${user.email} ');
       }
     });
   }
@@ -59,52 +61,52 @@ class _userEnterState extends State<userEnter> {
           Form(
               key: formKey,
               //autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: Column(
-                children: [
-                  emailTexField(context),
-                  SizedBox(height: 10),
-                  ParolaTextField(context),
-                  SizedBox(
-                    height: 15,
-                  ),
-                ],
-              )),
+              child: ParolaTextField(context)),
+          SizedBox(
+            height: 15,
+          ),
           navButton(context),
-          ForgotMyPassword(),
-          DontHaveAnAccount()
+          SizedBox(
+            height: 15,
+          ),
+          withContainer('assets/icons/google.png')
         ],
       ),
     );
   }
 
-  Expanded DontHaveAnAccount() {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        alignment: Alignment.bottomCenter,
-        child: TextButton(
-          child: Text("Don't have an account? Register here.",
-              style:
-                  TextStyle(fontFamily: "Montserrat", color: Colors.black87)),
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => RegisterPage()));
-          },
+  Container withContainer(String url) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(35, 0, 35, 0),
+      height: 46,
+      width: MediaQuery.of(context).size.width / 2.5,
+      decoration: BoxDecoration(
+          //border:Border.all(width: 1,color: Colors.red),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(width: 1, color: Colors.black.withOpacity(0.7)),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                offset: Offset(0, 3),
+                blurRadius: 6)
+          ]),
+      alignment: Alignment.center,
+      child: IconButton(
+        icon: Image.asset(
+          url,
+          width: 40,
+          height: 40,
+          fit: BoxFit.cover,
         ),
-      ),
-    );
-  }
+        onPressed: () {
+          FirebaseFirestoreFonk.googleIleGiris(context, auth, firestore)
+              .then((value) => FirebaseFirestoreFonk.FireBaseDelete(context));
 
-  TextButton ForgotMyPassword() {
-    return TextButton(
-      child: Text(
-        "Forgot your password?",
-        style: TextStyle(fontFamily: "Montserrat", color: Colors.black87),
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Home()));
+        },
       ),
-      onPressed: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => forgetPassword()));
-      },
     );
   }
 
@@ -129,12 +131,13 @@ class _userEnterState extends State<userEnter> {
             bool validate = formKey.currentState!.validate();
             if (validate) {
               formKey.currentState!.save();
-              FirebaseFirestoreFonk.SignInUserEmailAndPassword(
-                  email, password, context);
+              FirebaseFirestoreFonk.firebaseReauthenticateandDelete(
+                   password, context);
+                   
               formKey.currentState!.reset();
             }
           },
-          child: Text('Log In',
+          child: Text('Verify',
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 18,
@@ -162,24 +165,29 @@ class _userEnterState extends State<userEnter> {
         keyboardType: TextInputType.text,
         obscureText: !_passwordVisible,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          enabledBorder: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
-          errorStyle: TextStyle(color: Colors.red),
-          hintText: 'Password',
-          suffixIcon: IconButton(
+            border: OutlineInputBorder(),
+            enabledBorder: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
+            errorStyle: TextStyle(color: Colors.red),
+            hintText: 'Password',
+            suffixIcon: IconButton(
             icon: Icon(
-              _passwordVisible ? Icons.visibility : Icons.visibility_off,
-              color: Theme.of(context).primaryColorDark,
-            ),
+              // Based on passwordVisible state choose the icon
+               _passwordVisible
+               ? Icons.visibility
+               : Icons.visibility_off,
+               color: Theme.of(context).primaryColorDark,
+               ),
             onPressed: () {
-              setState(() {
-                _passwordVisible = !_passwordVisible;
-              });
-            },
-          ),
-        ),
+               // Update the state i.e. toogle the state of passwordVisible variable
+               setState(() {
+                   _passwordVisible = !_passwordVisible;
+               });
+             },
+            ),
+          ), 
+            
         validator: (value) {
           if (value!.length < 5) {
             return 'Password must be at least 5 character';
@@ -193,44 +201,5 @@ class _userEnterState extends State<userEnter> {
       ),
     );
   }
-
-  Container emailTexField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(35, 0, 35, 0),
-      height: 46,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          //border:Border.all(width: 1,color: Colors.red),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                offset: Offset(0, 3),
-                blurRadius: 6)
-          ]),
-      child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            contentPadding: EdgeInsets.fromLTRB(15, 11, 15, 11),
-            errorStyle: TextStyle(color: Colors.red),
-            hintText: 'E-mail'),
-        validator: (value) {
-          if (value!.length < 5) {
-            return 'E-mail must be at least 5 character';
-          } else if (!value.contains('@')) {
-            return 'E-mail must contain special character (@)';
-          } else {
-            return null;
-          }
-        },
-        onSaved: (newValue) {
-          email = newValue!;
-        },
-      ),
-    );
-  }
+  
 }
