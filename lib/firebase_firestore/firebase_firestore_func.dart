@@ -146,14 +146,16 @@ class FirebaseFirestoreFonk {
         behavior: SnackBarBehavior.floating,
         content: AwesomeSnackbarContent(
           title: 'Warning!',
-          message: "E-mail already in use , Try  with another one!",
+          message: "E-mail already in use , Try  with another oneeeeeee",
           contentType: ContentType.failure,
         ),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+    }finally{
       storage.write(name);
+    }
+      
 
   }
 // ------------------------------------------------------------------------------------------------------------
