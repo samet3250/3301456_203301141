@@ -129,7 +129,7 @@ class FirebaseFirestoreFonk {
           "user_id": _myUser.uid,
           "user_name": name,
           "user_gmail": _myUser.email,
-          "createdAt": "14"
+          "createdAt": FieldValue.serverTimestamp()
         });
       }
       // if (!_myUser!.emailVerified) {
@@ -137,7 +137,7 @@ class FirebaseFirestoreFonk {
       // } else {
       //   debugPrint('kullanicin maili onaylanmis');
       // }
-      // Navigator.of(context).pop();
+      Navigator.of(context).pop();
       // storage.write(name);
       
     } on FirebaseAuthException catch (e) {

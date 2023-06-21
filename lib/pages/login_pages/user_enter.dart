@@ -27,13 +27,7 @@ class _userEnterState extends State<userEnter> {
     auth = FirebaseAuth.instance;
     firestore = FirebaseFirestore.instance;
 
-    auth.authStateChanges().listen((User? user) {
-      if (user == null) {
-        debugPrint('User oturumu kapali');
-      } else {
-        debugPrint('User oturum açik ${user.email} ');
-      }
-    });
+
   }
 
   @override
