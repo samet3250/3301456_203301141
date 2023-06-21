@@ -118,7 +118,7 @@ class FirebaseFirestoreFonk {
   }
 // ------------------------------------------------------------------------------------------------------------
 
-  static void FirebaseCreateuserandemail(String e_mail, String password_,
+  static Future<void> FirebaseCreateuserandemail(String e_mail, String password_,
       String name, BuildContext context) async {
     try {
       var _userCredential = await auth.createUserWithEmailAndPassword(
@@ -137,8 +137,9 @@ class FirebaseFirestoreFonk {
       // } else {
       //   debugPrint('kullanicin maili onaylanmis');
       // }
-      storage.write(name);
       Navigator.of(context).pop();
+      storage.write(name);
+      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         SnackBar snackBar = SnackBar(
@@ -155,6 +156,7 @@ class FirebaseFirestoreFonk {
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Future.delayed(Duration(seconds: 2));
       }
     }
   }
