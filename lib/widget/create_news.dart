@@ -17,7 +17,7 @@ List<Widget> createNewsListView = [
   NewsBycategory(url: "https://www.cnbc.com/technology/", ind: 3),
   NewsBycategory(url: "https://www.cnbc.com/travel/", ind: 4),
   NewsBycategory(url: "https://www.cnbc.com/politics/", ind: 5),
-  NewsBycategory(url: "https://www.cnbc.com/health-and-science/", ind: 6),
+  NewsBycategory(url: "https://www.cnbc.com/science/", ind: 6),
   NewsBycategory(url: "https://www.cnbc.com/sports/", ind: 7),
   NewsBycategory(url: "https://www.cnbc.com/books/", ind: 8),
   NewsBycategory(url: "https://www.cnbc.com/movies/", ind: 9),
