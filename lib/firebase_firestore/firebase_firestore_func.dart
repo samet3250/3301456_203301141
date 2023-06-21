@@ -121,8 +121,7 @@ class FirebaseFirestoreFonk {
   static Future<void> FirebaseCreateuserandemail(String e_mail, String password_,
       String name, BuildContext context) async {
     try {
-Future(() async {
-        var _userCredential = await auth.createUserWithEmailAndPassword(
+      var _userCredential = await auth.createUserWithEmailAndPassword(
           email: e_mail, password: password_);
       var _myUser = _userCredential.user;
       if (_myUser != null) {
@@ -140,7 +139,6 @@ Future(() async {
       // }
       
       storage.write(name);
-}).then((value) => Navigator.of(context).pop());
       
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
