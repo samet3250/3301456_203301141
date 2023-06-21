@@ -138,7 +138,7 @@ class FirebaseFirestoreFonk {
       //   debugPrint('kullanicin maili onaylanmis');
       // }
       Navigator.of(context).pop();
-      storage.write(name);
+      // storage.write(name);
       
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
