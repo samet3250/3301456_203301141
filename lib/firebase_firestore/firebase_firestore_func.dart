@@ -125,10 +125,10 @@ class FirebaseFirestoreFonk {
           email: e_mail, password: password_);
       var _myUser = _userCredential.user;
       if (_myUser != null) {
-        await firestore.collection('users').doc(auth.currentUser?.uid).set({
-          "user_id": auth.currentUser?.uid,
+        await firestore.collection('users').doc(_myUser.uid).set({
+          "user_id": _myUser.uid,
           "user_name": name,
-          "user_gmail": auth.currentUser!.email,
+          "user_gmail": _myUser.email,
           "createdAt": FieldValue.serverTimestamp()
         });
       }
@@ -137,7 +137,7 @@ class FirebaseFirestoreFonk {
       // } else {
       //   debugPrint('kullanicin maili onaylanmis');
       // }
-      
+      Navigator.of(context).pop();
       storage.write(name);
       
     } on FirebaseAuthException catch (e) {
@@ -156,7 +156,7 @@ class FirebaseFirestoreFonk {
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-       
+        
       }
     }
   }
