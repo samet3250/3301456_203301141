@@ -156,7 +156,7 @@ class FirebaseFirestoreFonk {
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Future.delayed(Duration(seconds: 2));
+       
       }
     }
   }

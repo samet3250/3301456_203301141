@@ -108,7 +108,8 @@ class _RegisterPageState extends State<RegisterPage> {
               formKey2.currentState!.save();
 
               FirebaseFirestoreFonk.FirebaseCreateuserandemail(
-                  e_mail, password_, name + " " + surname, context).then((value) => Navigator.of(context).pop());
+                  e_mail, password_, name + " " + surname, context);
+                  Future.delayed(Duration(seconds: 1)).then((value) =>  Navigator.of(context).pop());
               
               formKey.currentState!.reset();
               formKey2.currentState!.reset();
