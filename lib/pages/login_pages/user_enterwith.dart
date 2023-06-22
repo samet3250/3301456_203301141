@@ -71,7 +71,7 @@ class _userEnterWithState extends State<userEnterWith> {
           fit: BoxFit.cover,
         ),
         onPressed: () {
-          FirebaseFirestoreFonk.googleIleGiris(context, auth, firestore).then(
+          FirebaseFirestoreFonk.googleIleGiris().then(
               (value) => Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Home())));
         },

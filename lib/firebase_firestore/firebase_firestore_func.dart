@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_news_app/provider/path_provider.dart';
 import 'package:my_news_app/pages/home_pages/home.dart';
@@ -15,9 +14,7 @@ class FirebaseFirestoreFonk {
   static PathProviderStorage storage = PathProviderStorage();
 
   static Future<void> googleIleGiris(
-    BuildContext context,
-    FirebaseAuth auth,
-    FirebaseFirestore firestore,
+
   ) async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     storage.write(googleUser!.displayName.toString());
@@ -102,13 +99,13 @@ class FirebaseFirestoreFonk {
   }
 // ------------------------------------------------------------------------------------------------------------
 
-  static void fireStoreVeriGuncelle() async {
+  static void fireStoreVeriGuncelle(String lan) async {
     var _myUser = auth.currentUser;
     if (_myUser != null) {
       print(auth.currentUser!.uid);
       await firestore
           .doc("users/${auth.currentUser!.uid}")
-          .update({"lan": "tr"});
+          .update({"lan": lan});
     }
   }
 // ------------------------------------------------------------------------------------------------------------
@@ -121,14 +118,14 @@ class FirebaseFirestoreFonk {
   static Future<void> FirebaseCreateuserandemail(String e_mail,
       String password_, String name, BuildContext context) async {
     try {
-      var _userCredential = await auth.createUserWithEmailAndPassword(
+      var userCredential = await auth.createUserWithEmailAndPassword(
           email: e_mail, password: password_);
-      var _myUser = _userCredential.user;
-      if (_myUser != null) {
-        await firestore.collection('users').doc(_myUser.uid).set({
-          "user_id": _myUser.uid,
+      var myUser = userCredential.user;
+      if (myUser != null) {
+        await firestore.collection('users').doc(myUser.uid).set({
+          "user_id": myUser.uid,
           "user_name": name,
-          "user_gmail": _myUser.email,
+          "user_gmail": myUser.email,
           "createdAt": FieldValue.serverTimestamp()
         });
       }
@@ -163,12 +160,12 @@ class FirebaseFirestoreFonk {
   static void SignInUserEmailAndPassword(
       String email, String password, BuildContext context) async {
     try {
-      var _userCredential = await auth.signInWithEmailAndPassword(
+      var userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
 
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => Home()));
-      debugPrint(_userCredential.toString());
+      debugPrint(userCredential.toString());
     } catch (e) {
       SnackBar snackBar = SnackBar(
         dismissDirection: DismissDirection.none,
@@ -189,8 +186,8 @@ class FirebaseFirestoreFonk {
 // ------------------------------------------------------------------------------------------------------------
 
   static void signOutUser() async {
-    var _user = GoogleSignIn().currentUser;
-    if (_user != null) {
+    var user = GoogleSignIn().currentUser;
+    if (user != null) {
       await GoogleSignIn().signOut();
     }
     await auth.signOut();

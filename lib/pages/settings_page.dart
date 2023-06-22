@@ -112,7 +112,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 onChanged: (String? value) async {
                   await box3.put("lan", value);
-                  FirebaseFirestoreFonk.fireStoreVeriGuncelle();
+                  FirebaseFirestoreFonk.fireStoreVeriGuncelle(box3.get("lan"));
                   setState(() {});
                 },
                 items: list2.map<DropdownMenuItem<String>>((String value) {

@@ -100,7 +100,7 @@ class _ReauthenticateAndDeleteState extends State<ReauthenticateAndDelete> {
           fit: BoxFit.cover,
         ),
         onPressed: () {
-          FirebaseFirestoreFonk.googleIleGiris(context, auth, firestore)
+          FirebaseFirestoreFonk.googleIleGiris()
               .then((value) => FirebaseFirestoreFonk.FireBaseDelete(context));
 
           Navigator.of(context)
