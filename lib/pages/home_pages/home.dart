@@ -25,7 +25,6 @@ class _HomeState extends State<Home> {
   late List bottonNavBarPages;
   var box4 = Hive.box("color");
   LocationHelper locationData = LocationHelper();
-  
   PathProviderStorage storage = PathProviderStorage();
   void setUserName() {
     storage.read().then((value) {
@@ -291,7 +290,6 @@ class _HomeState extends State<Home> {
         return Colors.cyan;
       case "teal":
         return Colors.teal;
-
       default:
         return Colors.red.shade400;
     }

@@ -105,10 +105,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   color: Colors.black,
                 ),
                 elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
+                style: const TextStyle(color: Colors.black),
                 underline: Container(
                   height: 0,
-                  color: Colors.deepPurpleAccent,
+                  
                 ),
                 onChanged: (String? value) async {
                   await box3.put("lan", value);
@@ -135,10 +135,10 @@ class _SettingsPageState extends State<SettingsPage> {
               trailing: DropdownButton<String>(
                 icon: const Icon(Icons.more_vert),
                 elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
+                style: const TextStyle(color: Colors.black),
                 underline: Container(
                   height: 0,
-                  color: Colors.deepPurpleAccent,
+                  
                 ),
                 onChanged: (String? value) async {
                   await box2.put("cat", value);
@@ -164,10 +164,10 @@ class _SettingsPageState extends State<SettingsPage> {
               trailing: DropdownButton<String>(
                 icon: const Icon(Icons.more_vert),
                 elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
+                style: const TextStyle(color: Colors.black),
                 underline: Container(
                   height: 0,
-                  color: Colors.deepPurpleAccent,
+                  
                 ),
                 onChanged: (String? value) async {
                   await box4.put("color", value);
@@ -263,7 +263,6 @@ class _SettingsPageState extends State<SettingsPage> {
         return Colors.cyan;
       case "teal":
         return Colors.teal;
-
       default:
         return Colors.red.shade400;
     }
