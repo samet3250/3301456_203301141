@@ -11,7 +11,7 @@ class Categories {
   Categories(name: "World", imageUrl: "assets/categories/world.jpg"),
   Categories(name: "Local", imageUrl: "assets/categories/local.jpg"),
   Categories(name: "Business", imageUrl: "assets/categories/business.jpg"),
-  Categories(name: "Technology", imageUrl: "assets/categories/tech.jpeg"),
+  Categories(name: "Techn", imageUrl: "assets/categories/tech.jpeg"),
   Categories(name: "Travel", imageUrl: "assets/categories/lifestyle.jpg"),
   Categories(name: "Politics", imageUrl: "assets/categories/Politic.png"),
   Categories(name: "Science", imageUrl: "assets/categories/science.jpg"),

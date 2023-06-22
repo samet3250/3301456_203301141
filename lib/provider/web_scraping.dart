@@ -191,7 +191,12 @@ Future<List<String>> getTextandSubtitle(String urll) async {
       news_content += (element.text.toString() + "\n");
     });
   });
-  subtitle = document.getElementsByTagName("meta")[8].attributes["content"]!;
+  document.getElementsByTagName("meta")[8].attributes["content"] == null
+      ? subtitle =
+          document.getElementsByTagName("meta")[7].attributes["content"]!
+      : subtitle =
+          document.getElementsByTagName("meta")[8].attributes["content"]!;
+
   List<String> mycontent = [news_content, subtitle];
   return mycontent;
 }

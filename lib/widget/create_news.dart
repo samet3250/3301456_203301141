@@ -21,6 +21,7 @@ List<Widget> createNewsListView = [
   NewsBycategory(url: "https://www.cnbc.com/sports/", ind: 7),
   NewsBycategory(url: "https://www.cnbc.com/books/", ind: 8),
   NewsBycategory(url: "https://www.cnbc.com/movies/", ind: 9),
+  
 ];
 
 class NewsBycategory extends StatefulWidget {
