@@ -3,8 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_news_app/firebase_options.dart';
+import 'package:my_news_app/model/news_model.dart';
 import 'package:my_news_app/pages/login_pages/user_enterwith.dart';
-import 'model/news_model.dart';
+
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       await box3.put("lan", "tr");
     }
     if (box2.get("cat") == null) {
-      await box3.put("cat", "turkey");
+      await box2.put("cat", "turkey");
     }
   }
 

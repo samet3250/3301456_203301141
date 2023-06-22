@@ -32,10 +32,5 @@ class news {
       this.writer = "",
       this.url = ""});
 
-  @override
-  String toString() {
-    // TODO: implement toString
 
-    return url + "," + imageUrl + "," + time + "," + title + "\n";
-  }
 }

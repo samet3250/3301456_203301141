@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:my_news_app/model/location.dart';
-
 class WeatherData {
   double? lat;
   double? lon;
@@ -28,7 +26,7 @@ class WeatherData {
         print(e);
       }
     } else {
-      print("API den değer gelmiyor");
+      print("API den deger gelmiyor");
     }
   }
 }

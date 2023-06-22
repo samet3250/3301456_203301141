@@ -23,11 +23,9 @@ class _HomeState extends State<Home> {
   int currentIndex = 0;
   String UserName = "User";
   late List bottonNavBarPages;
-  late FirebaseAuth auth;
-  late FirebaseFirestore firestore;
   var box4 = Hive.box("color");
   LocationHelper locationData = LocationHelper();
-  WeatherData weatherData = WeatherData();
+  
   PathProviderStorage storage = PathProviderStorage();
   void setUserName() {
     storage.read().then((value) {
@@ -50,8 +48,6 @@ class _HomeState extends State<Home> {
     super.initState();
 
     bottonNavBarPages = [HomeTabbarPages(), SearchPage(), Bookmark()];
-    firestore = FirebaseFirestore.instance;
-    auth = FirebaseAuth.instance;
     setUserName();
   }
 
@@ -340,7 +336,7 @@ class _HomeState extends State<Home> {
     if (locationData.latitude != null && locationData.longitude != null) {
       WeatherData WEATHER =
           WeatherData(lon: locationData.longitude, lat: locationData.latitude);
-      weatherData = WEATHER;
+      
       await WEATHER.getWeatherElements();
       return [WEATHER.city, WEATHER.degree, WEATHER.state];
     } else {

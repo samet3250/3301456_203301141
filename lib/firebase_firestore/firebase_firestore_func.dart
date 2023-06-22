@@ -44,13 +44,14 @@ class FirebaseFirestoreFonk {
 // ------------------------------------------------------------------------------------------------------------
   static Future<void> FireBaseDelete(BuildContext context) async {
     try {
-      var _myUser = auth.currentUser;
-      var uid = auth.currentUser!.uid;
+      var myUser = auth.currentUser;
+      var uid = myUser!.uid;
 
-      if (_myUser != null) {
+      if (myUser != null) {
         await auth.currentUser!.delete();
-      }
       FireStoreDelete(uid, context);
+
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         debugPrint('reauthenticate olunacak');
@@ -66,9 +67,18 @@ class FirebaseFirestoreFonk {
     try {
       var credential = EmailAuthProvider.credential(
           email: auth.currentUser!.email.toString(), password: password_);
+      
+
       await auth.currentUser!.reauthenticateWithCredential(credential);
+      var myUser = auth.currentUser;
+
+      if (myUser != null) {
+      var uid = myUser.uid;
 
       await auth.currentUser!.delete();
+      FireStoreDelete(uid, context);
+
+      }
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => userEnterWith()));
     } catch (e) {
